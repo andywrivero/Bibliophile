@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BibliophileApplication"
         mc:Ignorable="d"
-        Title="Blibiophile System" Height="400" Width="600"
+        Title="Bibliophile System" Height="400" Width="600"
         Background="WhiteSmoke">
 
     <Window.Resources>
@@ -30,7 +30,7 @@
                    FontSize="50"
                    FontStyle="Italic"
                    FontStretch="Expanded"
-                   Text="Welcome to Blibiophile!"/>
+                   Text="Welcome to Bibliophile!"/>
 
         <Border Grid.Row="1" 
                 Grid.Column ="0"
