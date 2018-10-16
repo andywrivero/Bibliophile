@@ -34,7 +34,7 @@ namespace BibliophileApplication
                 MessageBox.Show("Enter username/password", "Error", MessageBoxButton.OK);
                 return;
             }
-           
+
             viewModel.Password = passwordbox.Password;
 
             Close();

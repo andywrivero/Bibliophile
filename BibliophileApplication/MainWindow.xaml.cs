@@ -21,23 +21,23 @@ namespace BibliophileApplication
         {
             InitializeComponent();
 
-            //Models.Admin user = new Models.Admin()
-            //{
-            //    UserId = 1,
-            //    FirstName = "Andy",
-            //    LastName = "Rivero",
-            //    Age = 35,
-            //    Email = "andyrivero@mail.usf.edu",
-            //    UserName = "andyrivero",
-            //    PassWord = Others.PasswordHasher.HashPassword ("admin1234"),
-            //    HireDate = DateTime.Now
-            //};
+            Models.Admin user = new Models.Admin()
+            {
+                UserId = 1,
+                FirstName = "Andy",
+                LastName = "Rivero",
+                Age = 35,
+                Email = "andyrivero@mail.usf.edu",
+                UserName = "andyrivero",
+                PassWord = Others.PasswordHasher.HashPassword("admin1234"),
+                HireDate = DateTime.Now
+            };
 
-            //using (var db = new Models.BibliophileContext ())
-            //{
-            //    db.Users.Add(user);
-            //    db.SaveChanges();
-            //}
+            using (var db = new Models.BibliophileContext())
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
         }
 
         private void Admin_Button_Click(object sender, RoutedEventArgs e)
@@ -47,7 +47,8 @@ namespace BibliophileApplication
 
             passwordWindow.Closed += (sender2, e2) =>
             {
-                if (passwordWindowViewModel.UserName != null && passwordWindowViewModel.Password != null)
+                if (!string.IsNullOrWhiteSpace(passwordWindowViewModel.UserName) && 
+                    !string.IsNullOrWhiteSpace(passwordWindowViewModel.Password))
                 {
                     Models.Admin admin = null;
                     string username = passwordWindowViewModel.UserName;

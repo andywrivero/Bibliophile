@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿/*
+ * Password Hashing
+ * Based on the idea of Zerkms on Stackoverflow.
+ * Library base on the idea of Christian Gollhardt
+ * Stackoverflow https://stackoverflow.com/questions/4181198/how-to-hash-a-password
+*/
+
+using System;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BibliophileApplication.Others
 {
@@ -15,11 +18,10 @@ namespace BibliophileApplication.Others
 
         private static string HashPasswordWithSalt(string password, byte[] salt)
         {
-            byte[] hash = new Rfc2898DeriveBytes(password, salt, ITERATIONS).GetBytes(HASHSIZE);
-            byte[] hashBytes = new byte[salt.Length + hash.Length];
+            byte[] hashBytes = new byte[SALTSIZE + HASHSIZE];
 
             salt.CopyTo(hashBytes, 0);
-            hash.CopyTo(hashBytes, salt.Length);
+            new Rfc2898DeriveBytes(password, salt, ITERATIONS).GetBytes(HASHSIZE).CopyTo(hashBytes, SALTSIZE);
 
             return Convert.ToBase64String(hashBytes);
         }
@@ -38,10 +40,8 @@ namespace BibliophileApplication.Others
         {
             if (password == null || hashedPassword == null) return false;
 
-            byte[] hashBytes = Convert.FromBase64String(hashedPassword);
             byte[] salt = new byte[SALTSIZE];
-
-            Array.Copy(hashBytes, 0, salt, 0, SALTSIZE);
+            Array.Copy(Convert.FromBase64String(hashedPassword), 0, salt, 0, SALTSIZE);
 
             return HashPasswordWithSalt(password, salt) == hashedPassword;
         }

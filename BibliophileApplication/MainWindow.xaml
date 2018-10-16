@@ -32,31 +32,49 @@
                    FontStretch="Expanded"
                    Text="Welcome to Bibliophile!"/>
 
-        <Border Grid.Row="1" 
-                Grid.Column ="0"
+        <StackPanel Grid.Row ="1" 
+                    Grid.Column ="0" 
+                    Orientation="Vertical">
+            <TextBlock 
+                Text="Admin" 
+                HorizontalAlignment="Center"
+                FontSize="20"
+                FontStyle="Oblique"
+                FontStretch="Expanded"/>
+            <Border 
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Background="Gray" 
                 Padding="5"
                 CornerRadius="10,0,10,0">
-            <Button Content="{StaticResource adminimg}" 
+                <Button Content="{StaticResource adminimg}" 
                 Width="200" 
                 Height="160" 
                 Click="Admin_Button_Click">
-            </Button>
-        </Border>
+                </Button>
+            </Border>
+        </StackPanel>
 
-        <Border Grid.Row="1" 
-                Grid.Column="1" 
+        <StackPanel Grid.Row="1" 
+                    Grid.Column="1"
+                    Orientation="Vertical">
+            <TextBlock 
+                Text="Guest" 
+                HorizontalAlignment="Center"
+                FontSize="20"
+                FontStyle="Oblique"
+                FontStretch="Expanded"/>
+            <Border 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
                 Background="Gray" 
                 Padding="5"
                 CornerRadius="10,0,10,0" >
-            <Button Content="{StaticResource userimg}"
+                <Button Content="{StaticResource userimg}"
                 Grid.Column="1"  
                 Width="200" 
                 Height="160" Click="User_Button_Click"/>
-        </Border>
+            </Border>
+        </StackPanel>
     </Grid>
 </Window>

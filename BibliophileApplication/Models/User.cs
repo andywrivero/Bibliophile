@@ -22,6 +22,7 @@ namespace BibliophileApplication.Models
         private int _zipCode;
         private string _email;
 
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int? UserId
         {

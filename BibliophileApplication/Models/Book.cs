@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace BibliophileApplication.Models
         private int _totalCopies;
         private int _availableCopies;
 
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int? BookId
         {
