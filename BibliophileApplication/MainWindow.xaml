@@ -50,8 +50,8 @@
                 <Button Content="{StaticResource adminimg}" 
                 Width="200" 
                 Height="160" 
-                Click="Admin_Button_Click">
-                </Button>
+                Click="Admin_Button_Click"
+                FocusVisualStyle="{x:Null}"/>
             </Border>
         </StackPanel>
 
@@ -70,10 +70,11 @@
                 Background="Gray" 
                 Padding="5"
                 CornerRadius="10,0,10,0" >
-                <Button Content="{StaticResource userimg}"
-                Grid.Column="1"  
+                <Button Content="{StaticResource userimg}" 
                 Width="200" 
-                Height="160" Click="User_Button_Click"/>
+                Height="160" 
+                Click="User_Button_Click"
+                FocusVisualStyle="{x:Null}"/>
             </Border>
         </StackPanel>
     </Grid>
