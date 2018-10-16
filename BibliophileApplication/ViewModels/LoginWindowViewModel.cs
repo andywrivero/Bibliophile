@@ -6,9 +6,9 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BibliophileApplication.ViewModel
+namespace BibliophileApplication.ViewModels
 {
-    public class PasswordWindowViewModel 
+    public class LoginWindowViewModel 
     {
         public string UserName { get; set; }
         public string Password { get; set; }

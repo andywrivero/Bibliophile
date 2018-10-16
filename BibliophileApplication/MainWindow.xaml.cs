@@ -42,45 +42,49 @@ namespace BibliophileApplication
 
         private void Admin_Button_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.PasswordWindowViewModel passwordWindowViewModel = new ViewModel.PasswordWindowViewModel();
-            PasswordWindow passwordWindow = new PasswordWindow(passwordWindowViewModel);
-
-            passwordWindow.Closed += (sender2, e2) =>
+            LoginWindow loginWindow = new LoginWindow(new ViewModels.LoginWindowViewModel())
             {
-                if (!string.IsNullOrWhiteSpace(passwordWindowViewModel.UserName) && 
-                    !string.IsNullOrWhiteSpace(passwordWindowViewModel.Password))
+                Owner = this
+            };
+
+            loginWindow.Closed += (sender2, e2) =>
+            {
+                Models.Admin admin = FindAdmin (loginWindow.viewModel.UserName, loginWindow.viewModel.Password);
+
+                if (admin == null)
                 {
-                    Models.Admin admin = null;
-                    string username = passwordWindowViewModel.UserName;
-                    string password = passwordWindowViewModel.Password;
-
-                    using (var db = new Models.BibliophileContext())
-                    {
-                        var admins = (from user in db.Users
-                                     where user is Models.Admin
-                                     select user as Models.Admin).AsEnumerable ();
-
-                        admin = admins.FirstOrDefault(a => a.UserName == username &&
-                                                           Others.PasswordHasher.VerifyPassword (password, a.PassWord));
-
-                        if (admin == null)
-                        {
-                            MessageBox.Show("UserName/Password mismatch. Try again", "Error", MessageBoxButton.OK);
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Welcome back {admin.FirstName} {admin.LastName}");
-                        }
-                    }
+                    MessageBox.Show("UserName/Password mismatch. Try again", "Error", MessageBoxButton.OK);
+                }
+                else
+                {
+                    MessageBox.Show($"Welcome back {admin.FirstName} {admin.LastName}");
                 }
             };
 
-            passwordWindow.ShowDialog();
+            loginWindow.ShowDialog();
         }
 
         private void User_Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private Models.Admin FindAdmin (string username, string password)
+        {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) return null;
+
+            Models.Admin admin = null;
+
+            using (var db = new Models.BibliophileContext())
+            {
+                var admins = (from user in db.Users
+                              where user is Models.Admin
+                              select user as Models.Admin).AsEnumerable();
+
+                admin = admins.FirstOrDefault(a => a.UserName == username && Others.PasswordHasher.VerifyPassword(password, a.PassWord));
+            }
+
+            return admin;
         }
     }
 }

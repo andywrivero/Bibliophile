@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 
 namespace BibliophileApplication
 {
-    public partial class PasswordWindow : Window
+    public partial class LoginWindow : Window
     {
-        private ViewModel.PasswordWindowViewModel viewModel;
+        internal ViewModels.LoginWindowViewModel viewModel; 
 
-        public PasswordWindow(ViewModel.PasswordWindowViewModel viewModel)
+        public LoginWindow(ViewModels.LoginWindowViewModel viewModel)
         {
             InitializeComponent();
 
