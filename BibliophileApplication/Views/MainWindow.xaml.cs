@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BibliophileApplication
+namespace BibliophileApplication.Views
 {
     public partial class MainWindow : Window
     {
@@ -42,22 +42,23 @@ namespace BibliophileApplication
 
         private void Admin_Button_Click(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new LoginWindow(new ViewModels.LoginWindowViewModel())
+            ViewModels.LoginWindowViewModel lwvm;
+
+            LoginWindow loginWindow = new LoginWindow(lwvm = new ViewModels.LoginWindowViewModel())
             {
                 Owner = this
             };
 
             loginWindow.Closed += (sender2, e2) =>
             {
-                Models.Admin admin = FindAdmin (loginWindow.viewModel.UserName, loginWindow.viewModel.Password);
+                Models.Admin admin = GetAdmin (lwvm.UserName, lwvm.Password);
 
                 if (admin == null)
-                {
                     MessageBox.Show("UserName/Password mismatch. Try again", "Error", MessageBoxButton.OK);
-                }
                 else
                 {
-                    MessageBox.Show($"Welcome back {admin.FirstName} {admin.LastName}");
+                    new UserMainWindow(admin).Show(); 
+                    Close();
                 }
             };
 
@@ -66,10 +67,11 @@ namespace BibliophileApplication
 
         private void User_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            new UserMainWindow().Show();
+            Close();
         }
 
-        private Models.Admin FindAdmin (string username, string password)
+        private Models.Admin GetAdmin (string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) return null;
 

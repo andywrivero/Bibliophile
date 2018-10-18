@@ -13,11 +13,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BibliophileApplication
+namespace BibliophileApplication.Views
 {
     public partial class LoginWindow : Window
     {
-        internal ViewModels.LoginWindowViewModel viewModel; 
+        private ViewModels.LoginWindowViewModel viewModel; 
 
         public LoginWindow(ViewModels.LoginWindowViewModel viewModel)
         {
@@ -47,7 +47,7 @@ namespace BibliophileApplication
             Close();
         }
 
-        private void usernamebox_KeyDown(object sender, KeyEventArgs e)
+        private void Usernamebox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
@@ -55,7 +55,7 @@ namespace BibliophileApplication
             }
         }
 
-        private void passwordbox_KeyDown(object sender, KeyEventArgs e)
+        private void Passwordbox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {

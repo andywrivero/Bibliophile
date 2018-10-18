@@ -1,9 +1,9 @@
-﻿<Window x:Class="BibliophileApplication.LoginWindow"
+﻿<Window x:Class="BibliophileApplication.Views.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BibliophileApplication"
+        xmlns:local="clr-namespace:BibliophileApplication.Views"
         mc:Ignorable="d"
         Title="Admin Password Verification" Height="200" Width="350"
         ResizeMode="NoResize">
@@ -26,14 +26,14 @@
                  TextWrapping="Wrap"  
                  VerticalAlignment="Top" 
                  Width="214"
-                 KeyDown="usernamebox_KeyDown"/>
+                 KeyDown="Usernamebox_KeyDown"/>
         <PasswordBox Name="passwordbox"
                      HorizontalAlignment="Left" 
                      Margin="96,75,0,0" 
                      VerticalAlignment="Top" 
                      Width="214" 
                      Height="24"
-                     KeyDown="passwordbox_KeyDown"/>
+                     KeyDown="Passwordbox_KeyDown"/>
         <Button Content="Accept" 
                 HorizontalAlignment="Left" 
                 Margin="78,130,0,0" 

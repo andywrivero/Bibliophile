@@ -1,16 +1,16 @@
-﻿<Window x:Class="BibliophileApplication.MainWindow"
+﻿<Window x:Class="BibliophileApplication.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BibliophileApplication"
+        xmlns:local="clr-namespace:BibliophileApplication.Views"
         mc:Ignorable="d"
         Title="Bibliophile System" Height="400" Width="600"
         Background="WhiteSmoke">
 
     <Window.Resources>
-        <Image x:Key="adminimg" Source="Images/admin.png"/>
-        <Image x:Key="userimg" Source="Images/user.png"/>
+        <Image x:Key="adminimg" Source="../Images/admin.png"/>
+        <Image x:Key="userimg" Source="../Images/user.png"/>
     </Window.Resources>
     
     <Grid Margin="10">
@@ -36,7 +36,7 @@
                     Grid.Column ="0" 
                     Orientation="Vertical">
             <TextBlock 
-                Text="Admin" 
+                Text="Admin Login" 
                 HorizontalAlignment="Center"
                 FontSize="20"
                 FontStyle="Oblique"
@@ -59,7 +59,7 @@
                     Grid.Column="1"
                     Orientation="Vertical">
             <TextBlock 
-                Text="Guest" 
+                Text="Guest Login" 
                 HorizontalAlignment="Center"
                 FontSize="20"
                 FontStyle="Oblique"

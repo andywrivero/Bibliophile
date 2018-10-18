@@ -145,5 +145,22 @@ namespace BibliophileApplication.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public User Clone ()
+        {
+            return new User
+            {
+                _userId = UserId,
+                _firstName = FirstName,
+                _lastName = LastName,
+                _age = Age,
+                _address = Address,
+                _city = City,
+                _state = State,
+                _zipCode = ZipCode,
+                _email = Email,
+                Books = new ObservableCollection<Book>(Books)
+            };
+        }
     }
 }
