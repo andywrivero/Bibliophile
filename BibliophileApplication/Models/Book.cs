@@ -107,7 +107,7 @@ namespace BibliophileApplication.Models
 
         public static bool operator ==(Book lhs, Book rhs)
         {
-            if (lhs == null) return false;
+            if (lhs is null) return rhs is null;
 
             return lhs.Equals(rhs);
         }
@@ -121,6 +121,15 @@ namespace BibliophileApplication.Models
         {
             TotalCopies += increment;
             AvailableCopies += increment;
+        }
+
+        public void DecrementBookCopiesBy(int decrement)
+        {
+            if (AvailableCopies >= decrement)
+            {
+                TotalCopies -= decrement;
+                AvailableCopies -= decrement;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

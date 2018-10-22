@@ -46,6 +46,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -65,6 +67,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\BibliophileContext.cs" />
+    <Compile Include="MyControls\BookCardControl.xaml.cs">
+      <DependentUpon>BookCardControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyControls\UserCardControl.xaml.cs">
       <DependentUpon>UserCardControl.xaml</DependentUpon>
     </Compile>
@@ -73,6 +78,10 @@
       <DependentUpon>UserMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\LoginWindowViewModel.cs" />
+    <Page Include="MyControls\BookCardControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

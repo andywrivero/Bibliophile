@@ -6,18 +6,36 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
-        Title="Logged in as Guest" Height="450" Width="800">
+        Title="Logged in as Guest" Height="430" Width="1100">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <GroupBox Header="User information" 
-                  Margin="10"
-                  Width="750" 
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Header="Book information" 
+                  Margin="5"
+                  Width="450" 
                   Height="320" 
-                  HorizontalAlignment="Right" 
+                  HorizontalAlignment="Left" 
                   VerticalAlignment="Top">
-                <mycontrols:UserCardControl x:Name="usercardcontrol"/>
-            </GroupBox>
-            <Button Width="50" Height="50" Content="Change" Click="Button_Click"/>
+                    <mycontrols:BookCardControl x:Name="bookcardcontrol"/>
+                </GroupBox>
+                <DataGrid 
+                    x:Name="datagrid" 
+                    Margin ="10 10 0 0" 
+                    Width="600"
+                    SelectionMode="Single"
+                    IsReadOnly="True"
+                    AutoGenerateColumns="False"
+                    HorizontalContentAlignment="Center"
+                    SelectedItem="{Binding ElementName=bookcardcontrol, Path=Book}">
+                    <DataGrid.Columns>
+                        <!--This is how the grid will display its elements-->
+                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                        <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="*"/>
+                        <DataGridTextColumn Header="Publication Year" Binding="{Binding PublicationYear}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            <Button Margin ="20" Width="90" Height="30" Content="Request Copy" Click="Request_Button_Click"/>
         </StackPanel>
     </Grid>
 </Window>

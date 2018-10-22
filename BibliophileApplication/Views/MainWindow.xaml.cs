@@ -57,7 +57,7 @@ namespace BibliophileApplication.Views
                     MessageBox.Show("UserName/Password mismatch. Try again", "Error", MessageBoxButton.OK);
                 else
                 {
-                    new UserMainWindow(admin).Show(); 
+                    // Create new Admin Window
                     Close();
                 }
             };

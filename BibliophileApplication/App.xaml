@@ -4,6 +4,41 @@
              xmlns:local="clr-namespace:BibliophileApplication"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <x:Array x:Key="genrelist" Type="sys:String"
+                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                <sys:String>Science fiction</sys:String>
+                <sys:String>Satire</sys:String>
+                <sys:String>Drama</sys:String>
+                <sys:String>Action and Adventure</sys:String>
+                <sys:String>Romance</sys:String>
+                <sys:String>Mystery</sys:String>
+                <sys:String>Horror</sys:String>
+                <sys:String>Self help</sys:String>
+                <sys:String>Health</sys:String>
+                <sys:String>Guide</sys:String>
+                <sys:String>Travel</sys:String>
+                <sys:String>Children</sys:String>
+                <sys:String>Religion, Spirituality and New Age</sys:String>
+                <sys:String>Science</sys:String>
+                <sys:String>History</sys:String>
+                <sys:String>Math</sys:String>
+                <sys:String>Anthology</sys:String>
+                <sys:String>Poetry</sys:String>
+                <sys:String>Encyclopedias</sys:String>
+                <sys:String>Dictionaries</sys:String>
+                <sys:String>Comics</sys:String>
+                <sys:String>Art</sys:String>
+                <sys:String>Cookbooks</sys:String>
+                <sys:String>Diaries</sys:String>
+                <sys:String>Journals</sys:String>
+                <sys:String>Prayer books</sys:String>
+                <sys:String>Series</sys:String>
+                <sys:String>Trilogy</sys:String>
+                <sys:String>Biographies</sys:String>
+                <sys:String>Autobiographies</sys:String>
+                <sys:String>Fantasy</sys:String>
+            </x:Array>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
