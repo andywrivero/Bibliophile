@@ -74,6 +74,7 @@
       <DependentUpon>UserCardControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Others\PasswordHasher.cs" />
+    <Compile Include="ViewModels\RequestViewModel.cs" />
     <Compile Include="Views\UserMainWindow.xaml.cs">
       <DependentUpon>UserMainWindow.xaml</DependentUpon>
     </Compile>

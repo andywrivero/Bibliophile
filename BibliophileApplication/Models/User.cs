@@ -12,6 +12,8 @@ namespace BibliophileApplication.Models
 {
     public class User : INotifyPropertyChanged
     {
+        public static readonly int MAXCOPIES = 5;
+
         private int? _userId;
         private string _firstName;
         private string _lastName;

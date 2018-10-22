@@ -6,36 +6,55 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
-        Title="Logged in as Guest" Height="430" Width="1100">
+        Title="Logged in as Guest" Height="580" SizeToContent="Width">
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <GroupBox Header="Book information" 
-                  Margin="5"
-                  Width="450" 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding ElementName=bookcardcontrol, Path=Width}"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <GroupBox Header="Book information" 
+                  Margin="5" 
                   Height="320" 
                   HorizontalAlignment="Left" 
                   VerticalAlignment="Top">
-                    <mycontrols:BookCardControl x:Name="bookcardcontrol"/>
-                </GroupBox>
-                <DataGrid 
-                    x:Name="datagrid" 
-                    Margin ="10 10 0 0" 
+                <mycontrols:BookCardControl x:Name="bookcardcontrol"/>
+            </GroupBox>
+            <GroupBox Name="requestgroupbox" Header="Request Information" Width="{Binding ElementName=bookcardcontrol, Path=Width}" HorizontalAlignment="Left" Margin="10">
+                <StackPanel Orientation="Vertical" Margin="20">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="10 0 0 0">User card Id:</Label>
+                        <TextBox Width="300" Text="{Binding UserId}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                        <Label>Email address:</Label>
+                        <TextBox Width="300" Text="{Binding Email}"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <Button Width="90" 
+                    Height="30" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Content="Request Copy" 
+                    Click="Request_Button_Click"/>
+        </StackPanel>
+        <DataGrid   x:Name="datagrid" 
+                    Grid.Column="1"
+                    Margin="10"
                     Width="600"
                     SelectionMode="Single"
                     IsReadOnly="True"
                     AutoGenerateColumns="False"
                     HorizontalContentAlignment="Center"
                     SelectedItem="{Binding ElementName=bookcardcontrol, Path=Book}">
-                    <DataGrid.Columns>
-                        <!--This is how the grid will display its elements-->
-                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
-                        <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="*"/>
-                        <DataGridTextColumn Header="Publication Year" Binding="{Binding PublicationYear}" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
-            <Button Margin ="20" Width="90" Height="30" Content="Request Copy" Click="Request_Button_Click"/>
-        </StackPanel>
+            <DataGrid.Columns>
+                <!--This is how the grid will display its elements-->
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="*"/>
+                <DataGridTextColumn Header="Publication Year" Binding="{Binding PublicationYear}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
