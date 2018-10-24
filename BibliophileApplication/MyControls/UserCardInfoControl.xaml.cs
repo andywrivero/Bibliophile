@@ -16,33 +16,40 @@ using System.Windows.Shapes;
 
 namespace BibliophileApplication.MyControls
 {
-    public partial class UserCardControl : UserControl
+    public partial class UserCardInfoControl : UserControl
     {
-        // The object User is the ViewModel of this control. 
-        // When it changes then the DataContext of this control is updated accordingly
-        private Models.User _user;
         public Models.User User
         {
-            get => _user;
+            get
+            {
+                return DataContext as Models.User;
+            }
 
             set
             {
-                DataContext = _user = value;
+                DataContext = value;
+            }
+        }
+        // Set controls to the edit value;
+        public bool Editable
+        {
+            set
+            {
+                SetEditable(value);
             }
         }
 
-        public UserCardControl()
+        public UserCardInfoControl()
         {
             InitializeComponent();
 
-            // set the item source of the Age combobox to a list of integers 1..120
             combobox.ItemsSource = Enumerable.Range(1, 120);
         }
 
-        public void SetEditable(bool editOption)
+        private void SetEditable(bool editOption)
         {
             // Get the list of texboxes
-            List<Control> controls = new List<Control> ();
+            List<Control> controls = new List<Control>();
             GetAllTextBoxes(maingrid, controls);
 
             // Enable or disable textboxes according to editOption

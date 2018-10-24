@@ -17,60 +17,57 @@ namespace BibliophileApplication.Views
 {
     public partial class MainWindow : Window
     {
+        private ViewModels.LoginWindowViewModel LoginVM { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
-
-            //Models.Admin user = new Models.Admin()
-            //{
-            //    UserId = 1,
-            //    FirstName = "Andy",
-            //    LastName = "Rivero",
-            //    Age = 35,
-            //    Email = "andyrivero@mail.usf.edu",
-            //    UserName = "andyrivero",
-            //    PassWord = Others.PasswordHasher.HashPassword("admin1234"),
-            //    HireDate = DateTime.Now
-            //};
-
-            //using (var db = new Models.BibliophileContext())
-            //{
-            //    db.Users.Add(user);
-            //    db.SaveChanges();
-            //}
         }
 
         private void Admin_Button_Click(object sender, RoutedEventArgs e)
         {
-            ViewModels.LoginWindowViewModel lwvm;
-
-            LoginWindow loginWindow = new LoginWindow(lwvm = new ViewModels.LoginWindowViewModel())
-            {
-                Owner = this
-            };
-
-            loginWindow.Closed += (sender2, e2) =>
-            {
-                Models.Admin admin = GetAdmin (lwvm.UserName, lwvm.Password);
-
-                if (admin == null)
-                    MessageBox.Show("UserName/Password mismatch. Try again", "Error", MessageBoxButton.OK);
-                else
-                {
-                    // Create new Admin Window
-                    Close();
-                }
-            };
-
+            // Create a login window 
+            LoginWindow loginWindow = new LoginWindow(LoginVM = new ViewModels.LoginWindowViewModel()) { Owner = this };
+            // handle the closed event of the login window to authenticate the admin
+            loginWindow.Closed += LoginWindow_Closed;
+            // Show login window
             loginWindow.ShowDialog();
+        }
+
+        private void LoginWindow_Closed(object sender, EventArgs e)
+        {
+            if (LoginVM.UserName == null && LoginVM.Password == null) return;
+
+            // Validate admin login information
+            Models.Admin admin = GetAdmin(LoginVM.UserName, LoginVM.Password);
+
+            // check the admin exist
+            if (admin == null)
+                MessageBox.Show("UserName/Password mismatch. Try again", "Error", MessageBoxButton.OK);
+            else
+            {
+                // create the admin window 
+                AdminMainWindow adminWindow = new AdminMainWindow();
+                // handle the closed event of the admin window to restore the main window 
+                adminWindow.Closed += (sender2, e2) => { Show(); };
+                // Hide main window, and show admin window
+                Hide();
+                adminWindow.Show();
+            }
         }
 
         private void User_Button_Click(object sender, RoutedEventArgs e)
         {
-            new UserMainWindow().Show();
-            Close();
+            // create user window
+            GuestMainWindow userWindow = new GuestMainWindow();
+            // handle the closed event of the user window to restore the main window
+            userWindow.Closed += (sender2, e2) => { Show(); };
+            // hide main window, and show user window
+            Hide();
+            userWindow.Show();
         }
 
+        // Find and return the admin from the database that matches username and password
         private Models.Admin GetAdmin (string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) return null;

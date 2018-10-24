@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,29 +14,33 @@ using System.Data.Entity;
 
 namespace BibliophileApplication.Views
 {
-    public partial class UserMainWindow : Window
+    public partial class GuestMainWindow : Window
     {
         // A UserMainWindow for the Guest
-        public UserMainWindow()
+        public GuestMainWindow()
         {
             InitializeComponent();
 
-            LoadBooks();
-
-            bookcardcontrol.SetEditable(false);
-
-            // Bind the request control
-            requestgroupbox.DataContext = new ViewModels.RequestViewModel();
+            // Set the view model of this window
+            DataContext = new ViewModels.UserMainWindowViewModel()
+            {
+                Books = GetBookList()
+            };
         }
 
-        private void LoadBooks ()
+        private List<Models.Book> GetBookList ()
         {
+            // The book list to be returned
+            List<Models.Book> bookList;
+
             // Load book collection from database
             using (Models.BibliophileContext db = new Models.BibliophileContext())
             {
                 db.Books.Load();
-                datagrid.ItemsSource = db.Books.Local;
+                bookList = db.Books.Local.ToList ();
             }
+
+            return bookList;
         }
 
         private void Request_Button_Click(object sender, RoutedEventArgs e)
@@ -45,18 +48,22 @@ namespace BibliophileApplication.Views
             // Check there's a book selection
             if (datagrid.SelectedItem is Models.Book book) 
             {
-                // Obtain the request information
-                ViewModels.RequestViewModel request = requestgroupbox.DataContext as ViewModels.RequestViewModel;
-                
+                // get datacontext viewmodel
+                ViewModels.UserMainWindowViewModel viewmodel = DataContext as ViewModels.UserMainWindowViewModel;
+
+                // get the user id and email from this viewmodel
+                string strUserId = viewmodel.UserId;
+                string email = viewmodel.Email;
+
                 // Validate for nullity
-                if (string.IsNullOrWhiteSpace(request.UserId) || string.IsNullOrWhiteSpace(request.Email))
+                if (string.IsNullOrWhiteSpace(strUserId) || string.IsNullOrWhiteSpace(email))
                 {
                     MessageBox.Show("Enter a valid User Card Id and associated Email", "Error", MessageBoxButton.OK);
                     return;
                 }
 
-                // Validate for user id is an integer
-                if (!int.TryParse (request.UserId, out int userid))
+                // Validate user id is an integer
+                if (!int.TryParse (strUserId, out int userid))
                 {
                     MessageBox.Show("Enter a valid User Card Id", "Error", MessageBoxButton.OK);
                     return;
@@ -66,7 +73,7 @@ namespace BibliophileApplication.Views
                 using (Models.BibliophileContext db = new Models.BibliophileContext())
                 {
                     // Find user with requested user id and email
-                    Models.User user = db.Users.FirstOrDefault(u => u.UserId == userid && u.Email == request.Email);
+                    Models.User user = db.Users.FirstOrDefault(u => u.UserId == userid && u.Email == email);
 
                     // If the user is not found print a message
                     if (user == null)
@@ -95,6 +102,17 @@ namespace BibliophileApplication.Views
             {
                 MessageBox.Show("Please make a book selection", "Error", MessageBoxButton.OK);
                 return;
+            }
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                // We need to force the focus out of the texbox so the binded property can get its value
+                (sender as TextBox).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                // call the button click event handler to process the request
+                Request_Button_Click(sender, null);
             }
         }
     }

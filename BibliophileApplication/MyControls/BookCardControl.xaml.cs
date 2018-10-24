@@ -17,8 +17,9 @@ namespace BibliophileApplication.MyControls
 {
     public partial class BookCardControl : UserControl
     {
-        // The Datacontext of this control is set when a value is assign to this property
         private Models.Book _book;
+
+        // When the book property value changes the datacontext is the to its value
         public Models.Book Book
         {
             get => _book;
@@ -28,15 +29,24 @@ namespace BibliophileApplication.MyControls
                 DataContext = _book = value;
             }
         }
+        // Set controls to the edit value;
+        public bool Editable
+        {
+            set
+            {
+                SetEditable(value);
+            }
+        }
 
         public BookCardControl()
         {
             InitializeComponent();
 
+            // Set the years range of the combobox from 1900 until current year
             yearcombobox.ItemsSource = Enumerable.Range(1900, DateTime.Now.Year);
         }
 
-        public void SetEditable(bool editOption)
+        private void SetEditable(bool editOption)
         {
             // Get the list of texboxes
             List<Control> controls = new List<Control>();

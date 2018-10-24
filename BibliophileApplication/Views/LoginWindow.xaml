@@ -26,14 +26,14 @@
                  TextWrapping="Wrap"  
                  VerticalAlignment="Top" 
                  Width="214"
-                 KeyDown="Usernamebox_KeyDown"/>
+                 KeyDown="TextBox_KeyDown"/>
         <PasswordBox Name="passwordbox"
                      HorizontalAlignment="Left" 
                      Margin="96,75,0,0" 
                      VerticalAlignment="Top" 
                      Width="214" 
                      Height="24"
-                     KeyDown="Passwordbox_KeyDown"/>
+                     KeyDown="TextBox_KeyDown"/>
         <Button Content="Accept" 
                 HorizontalAlignment="Left" 
                 Margin="78,130,0,0" 

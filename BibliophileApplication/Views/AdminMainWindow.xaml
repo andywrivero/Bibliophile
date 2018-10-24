@@ -1,0 +1,88 @@
+﻿<Window x:Class="BibliophileApplication.Views.AdminMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BibliophileApplication.Views"
+        xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
+        mc:Ignorable="d"
+        Title="AdminMainWindow" Height="450" SizeToContent="Width">
+
+    <TabControl>
+        <TabItem Header="Users">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="User Detailed Information" Grid.Column="0" Margin="5">
+                    <mycontrols:UserCardInfoControl x:Name="usercardcontrol" Editable="False"/>
+                </GroupBox>
+                <DataGrid Name="usergrid"
+                          Grid.Column="1"
+                          Margin="5"
+                          Width="400"
+                          SelectionMode="Single"
+                          IsReadOnly="True"
+                          AutoGenerateColumns="False"
+                          HorizontalContentAlignment="Center"
+                          ItemsSource="{Binding Users}"
+                          SelectedItem="{Binding ElementName=usercardcontrol, Path=User}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Card Id" Width="*" Binding="{Binding UserId}"/>
+                        <DataGridTextColumn Header="First Name" Width="*" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="Last Name" Width="*" Binding="{Binding LastName}"/>
+                    </DataGrid.Columns>
+
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add User" Click="AddUser_MenuItem_Click"/>
+                            <MenuItem Header="Modify User" Click="ModifyUser_MenuItem_Click"/>
+                            <MenuItem Header="Remove User" Click="RemoveUser_MenuItem_Click"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Books">
+
+        </TabItem>
+        <TabItem Header="Employees">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="Employee Detailed Information" Grid.Column="0" Margin="5">
+                    <mycontrols:AdminInfoControl x:Name="admincardcontrol" Editable="False"/>
+                </GroupBox>
+                <DataGrid Name="employeegrid"
+                          Grid.Column="1"
+                          Margin="5"
+                          Width="400"
+                          SelectionMode="Single"
+                          IsReadOnly="True"
+                          AutoGenerateColumns="False"
+                          HorizontalContentAlignment="Center"
+                          ItemsSource="{Binding Admins}"
+                          SelectedItem="{Binding ElementName=admincardcontrol, Path=Admin}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Employee Id" Width="*" Binding="{Binding UserId}"/>
+                        <DataGridTextColumn Header="First Name" Width="*" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="Last Name" Width="*" Binding="{Binding LastName}"/>
+                    </DataGrid.Columns>
+
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add Employee" Click="AddEmployee_MenuItem_Click"/>
+                            <MenuItem Header="Modify Employee" Click="ModifyEmployee_MenuItem_Click_1"/>
+                            <MenuItem Header="Remove Employee" Click="RemoveEmployee_MenuItem_Click_2"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>

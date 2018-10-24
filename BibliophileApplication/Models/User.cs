@@ -124,7 +124,7 @@ namespace BibliophileApplication.Models
         public override bool Equals(object obj)
         {
             if (obj is User user)
-                return UserId == user.UserId && FirstName == user.FirstName && LastName == user.LastName;
+                return UserId == user.UserId;
             else
                 return false;
         }
@@ -161,7 +161,7 @@ namespace BibliophileApplication.Models
                 _state = State,
                 _zipCode = ZipCode,
                 _email = Email,
-                Books = new ObservableCollection<Book>(Books)
+                Books = new ObservableCollection<Book>(Books.ToList ())
             };
         }
     }

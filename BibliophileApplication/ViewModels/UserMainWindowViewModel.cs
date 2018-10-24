@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace BibliophileApplication.ViewModels
 {
-    public class RequestViewModel
+    public class UserMainWindowViewModel
     {
         public string UserId { get; set; }
         public string Email { get; set; }
+        public List<Models.Book> Books { get; set; }
     }
 }

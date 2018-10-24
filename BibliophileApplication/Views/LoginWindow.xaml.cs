@@ -47,16 +47,9 @@ namespace BibliophileApplication.Views
             Close();
         }
 
-        private void Usernamebox_KeyDown(object sender, KeyEventArgs e)
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return)
-            {
-                Accept_Button_Click(sender, null);
-            }
-        }
-
-        private void Passwordbox_KeyDown(object sender, KeyEventArgs e)
-        {
+            // Handle the Return Key on the textboxes as the Accept Button
             if (e.Key == Key.Return)
             {
                 Accept_Button_Click(sender, null);

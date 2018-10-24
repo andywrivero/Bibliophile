@@ -42,5 +42,10 @@ namespace BibliophileApplication.Models
                 NotifyPropertyChanged("HireDate");
             }
         }
+
+        public Admin()
+        {
+            HireDate = DateTime.Now;
+        }
     }
 }
