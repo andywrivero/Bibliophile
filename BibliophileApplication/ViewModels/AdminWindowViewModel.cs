@@ -14,6 +14,7 @@ namespace BibliophileApplication.ViewModels
         private ObservableCollection<Admin> _admins;
         private ObservableCollection<User> _users;
         private ObservableCollection<Book> _books;
+        private ObservableCollection<Tuple<User, Book>> _checkouts;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -27,7 +28,7 @@ namespace BibliophileApplication.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Admins"));
             }
         }
-        public ObservableCollection<Models.User> Users
+        public ObservableCollection<User> Users
         {
             get => _users;
 
@@ -37,7 +38,7 @@ namespace BibliophileApplication.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Users"));
             }
         }
-        public ObservableCollection<Models.Book> Books
+        public ObservableCollection<Book> Books
         {
             get => _books;
 
@@ -47,6 +48,15 @@ namespace BibliophileApplication.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Books"));
             }
         }
+        public ObservableCollection<Tuple<User, Book>> Checkouts
+        {
+            get => _checkouts;
 
+            set
+            {
+                _checkouts = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Checkouts"));
+            }
+        }
     }
 }

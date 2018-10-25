@@ -29,6 +29,25 @@ namespace BibliophileApplication.MyControls
                 DataContext = _book = value;
             }
         }
+
+        // Set whether or not this window is for a new book or existing book
+        public bool IsNewBook
+        {
+            set
+            {
+                if (value)
+                {
+                    availablecopiesbox.Visibility = Visibility.Collapsed;
+                    availablecopieslabel.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    availablecopiesbox.Visibility = Visibility.Visible;
+                    availablecopieslabel.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
         // Set controls to the edit value;
         public bool Editable
         {

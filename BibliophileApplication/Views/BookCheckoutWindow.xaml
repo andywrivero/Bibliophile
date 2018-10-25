@@ -1,0 +1,44 @@
+﻿<Window x:Class="BibliophileApplication.Views.BookCheckoutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BibliophileApplication.Views"
+        xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
+        mc:Ignorable="d"
+        Title="Checkout Window" Height="600" SizeToContent="Width">
+    
+    <StackPanel Orientation="Vertical">
+        <GroupBox Header="Book information" 
+                  Margin="5" 
+                  Height="320" 
+                  HorizontalAlignment="Left" 
+                  VerticalAlignment="Top">
+            <mycontrols:BookCardControl x:Name="bookcardcontrol" Editable="False" DataContext="{Binding Book}"/>
+        </GroupBox>
+        <GroupBox Name="checkoutgroupbox" Header="Checkout Information" 
+                      Width="{Binding ElementName=bookcardcontrol, Path=Width}" 
+                      HorizontalAlignment="Left" 
+                      Margin="10">
+            <StackPanel Orientation="Vertical" Margin="20">
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="10 0 0 0">User card Id:</Label>
+                    <TextBox Width="300" Text="{Binding UserId}"
+                                 KeyDown="TextBox_KeyDown"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                    <Label>Email address:</Label>
+                    <TextBox Width="300" Text="{Binding Email}"
+                                 KeyDown="TextBox_KeyDown"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <Button Width="90" 
+                Height="30" 
+                Margin="0 20 0 0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Content="Checkout Copy" 
+                Click="Request_Button_Click"/>
+    </StackPanel>
+</Window>

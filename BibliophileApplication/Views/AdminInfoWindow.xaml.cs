@@ -26,6 +26,7 @@ namespace BibliophileApplication.Views
         private ObservableCollection<Models.User> admins;
         private Models.Admin admin;
 
+        // This constructor is to construct a new admin employee
         public AdminInfoWindow(ObservableCollection<Models.User> admins)
         {
             this.admins = admins ?? throw new NullReferenceException("Invalid reference to an admin list");
@@ -35,7 +36,10 @@ namespace BibliophileApplication.Views
             DataContext = new Models.Admin();
 
             mode = MODE.NEWADMIN;
+            Title = "New Admi Employee";
         }
+
+        // This constructor for this window is to modify an existing admin employee
         public AdminInfoWindow(Models.Admin admin)
         {
             this.admin = admin ?? throw new NullReferenceException("Invalid reference to an admin");
@@ -53,26 +57,27 @@ namespace BibliophileApplication.Views
                 ZipCode = admin.ZipCode,
                 Email = admin.Email,
                 Age = admin.Age,
+                HireDate = admin.HireDate,
                 UserName = admin.UserName,
                 PassWord = admin.PassWord
             };
 
             mode = MODE.MODIFYADMIN;
+            Title = "Modify Admin Employee";
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Accept_Button_Click(object sender, RoutedEventArgs e)
         {
             // Validate window information
 
             if (mode == MODE.NEWADMIN)
             {
-                string password = "admin1234"; // Default
-
-                if (!string.IsNullOrWhiteSpace(passwordbox.Password))
-                    password = passwordbox.Password;
-
                 Models.Admin newAdmin = DataContext as Models.Admin;
-                newAdmin.PassWord = Others.PasswordHasher.HashPassword(password);
+
+                if (string.IsNullOrWhiteSpace(passwordbox.Password))
+                    newAdmin.PassWord = Others.PasswordHasher.HashPassword("1234"); // default password
+                else
+                    newAdmin.PassWord = Others.PasswordHasher.HashPassword(passwordbox.Password);
 
                 admins.Add(newAdmin);
 
@@ -91,6 +96,7 @@ namespace BibliophileApplication.Views
                 admin.ZipCode = modAdmin.ZipCode;
                 admin.Email = modAdmin.Email;
                 admin.Age = modAdmin.Age;
+                admin.HireDate = modAdmin.HireDate;
                 admin.UserName = modAdmin.UserName;
 
                 if (!string.IsNullOrWhiteSpace(passwordbox.Password))
@@ -100,7 +106,7 @@ namespace BibliophileApplication.Views
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

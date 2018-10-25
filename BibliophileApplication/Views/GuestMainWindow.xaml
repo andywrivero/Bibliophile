@@ -53,6 +53,7 @@
                     IsReadOnly="True"
                     AutoGenerateColumns="False"
                     HorizontalContentAlignment="Center"
+                    SelectionUnit="FullRow"
                     ItemsSource="{Binding Books}"
                     SelectedItem="{Binding ElementName=bookcardcontrol, Path=Book}">
             <DataGrid.Columns>

@@ -78,12 +78,19 @@
     </Compile>
     <Compile Include="Others\PasswordHasher.cs" />
     <Compile Include="ViewModels\AdminWindowViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\UserMainWindowViewModel.cs" />
     <Compile Include="Views\AdminInfoWindow.xaml.cs">
       <DependentUpon>AdminInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AdminMainWindow.xaml.cs">
       <DependentUpon>AdminMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookCheckoutWindow.xaml.cs">
+      <DependentUpon>BookCheckoutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookInfoWindow.xaml.cs">
+      <DependentUpon>BookInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GuestMainWindow.xaml.cs">
       <DependentUpon>GuestMainWindow.xaml</DependentUpon>
@@ -105,6 +112,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AdminMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookCheckoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

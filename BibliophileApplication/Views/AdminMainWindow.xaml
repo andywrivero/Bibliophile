@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
-        Title="AdminMainWindow" Height="450" SizeToContent="Width">
+        Title="AdminMainWindow" Height="550" SizeToContent="Width">
 
     <TabControl>
-        <TabItem Header="Users">
+        <TabItem Header="Users" Height="30" Width="80">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <GroupBox Header="User Detailed Information" Grid.Column="0" Margin="5">
+                <GroupBox Header="User Detailed Information" Grid.Column="0">
                     <mycontrols:UserCardInfoControl x:Name="usercardcontrol" Editable="False"/>
                 </GroupBox>
                 <DataGrid Name="usergrid"
@@ -27,6 +27,8 @@
                           IsReadOnly="True"
                           AutoGenerateColumns="False"
                           HorizontalContentAlignment="Center"
+                          SelectionUnit="FullRow"
+                          SelectedIndex="0"
                           ItemsSource="{Binding Users}"
                           SelectedItem="{Binding ElementName=usercardcontrol, Path=User}">
                     <DataGrid.Columns>
@@ -45,17 +47,55 @@
                 </DataGrid>
             </Grid>
         </TabItem>
-        <TabItem Header="Books">
 
-        </TabItem>
-        <TabItem Header="Employees">
+        <TabItem Header="Books" Height="30" Width="80">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <GroupBox Header="Employee Detailed Information" Grid.Column="0" Margin="5">
+                <GroupBox Header="Book Detailed Information" Grid.Column="0">
+                    <mycontrols:BookCardControl x:Name="bookcardcontrol" Editable="False"/>
+                </GroupBox>
+                <DataGrid Name="bookgrid"
+                          Grid.Column="1"
+                          Margin="5"
+                          Width="400"
+                          SelectionMode="Single"
+                          IsReadOnly="True"
+                          AutoGenerateColumns="False"
+                          HorizontalContentAlignment="Center"
+                          SelectionUnit="FullRow"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding Books}"
+                          SelectedItem="{Binding ElementName=bookcardcontrol, Path=Book}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ISBN" Width="*" Binding="{Binding BookId}"/>
+                        <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Title}"/>
+                        <DataGridTextColumn Header="Genre" Width="*" Binding="{Binding Genre}"/>
+                    </DataGrid.Columns>
+
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Add Book" Click="AddBook_MenuItem_Click"/>
+                            <MenuItem Header="Modify Book" Click="ModifyBook_MenuItem_Click"/>
+                            <MenuItem Header="Remove Book" Click="RemoveBook_MenuItem_Click"/>
+                            <MenuItem Header="Checkout Book" Click="CheckoutBook_MenuItem_Click"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Employees" Height="30" Width="80">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="Employee Detailed Information" Grid.Column="0">
                     <mycontrols:AdminInfoControl x:Name="admincardcontrol" Editable="False"/>
                 </GroupBox>
                 <DataGrid Name="employeegrid"
@@ -66,6 +106,8 @@
                           IsReadOnly="True"
                           AutoGenerateColumns="False"
                           HorizontalContentAlignment="Center"
+                          SelectionUnit="FullRow"
+                          SelectedIndex="0"
                           ItemsSource="{Binding Admins}"
                           SelectedItem="{Binding ElementName=admincardcontrol, Path=Admin}">
                     <DataGrid.Columns>
@@ -77,12 +119,39 @@
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Add Employee" Click="AddEmployee_MenuItem_Click"/>
-                            <MenuItem Header="Modify Employee" Click="ModifyEmployee_MenuItem_Click_1"/>
-                            <MenuItem Header="Remove Employee" Click="RemoveEmployee_MenuItem_Click_2"/>
+                            <MenuItem Header="Modify Employee" Click="ModifyEmployee_MenuItem_Click"/>
+                            <MenuItem Header="Remove Employee" Click="RemoveEmployee_MenuItem_Click"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
             </Grid>
+        </TabItem>
+
+        <TabItem Header="Checkouts" Height="30" Width="80">
+            <DataGrid   Name="checkoutgrid"
+                        Margin="5"
+                        Width="800"
+                        SelectionMode="Single"
+                        IsReadOnly="True"
+                        AutoGenerateColumns="False"
+                        HorizontalContentAlignment="Center"
+                        SelectionUnit="FullRow"
+                        ItemsSource="{Binding Checkouts}"
+                        SelectedIndex="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Card ID" Width="*" Binding="{Binding Item1.UserId}"/>
+                    <DataGridTextColumn Header="First Name" Width="*" Binding="{Binding Item1.FirstName}"/>
+                    <DataGridTextColumn Header="Last Name" Width="*" Binding="{Binding Item1.LastName}"/>
+                    <DataGridTextColumn Header="Book ISBN" Width="*" Binding="{Binding Item2.BookId}"/>
+                    <DataGridTextColumn Header="Book Title" Width="*" Binding="{Binding Item2.Title}"/>
+                </DataGrid.Columns>
+
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Remove" Click="RemoveCheckout_MenuItem_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
         </TabItem>
     </TabControl>
 </Window>

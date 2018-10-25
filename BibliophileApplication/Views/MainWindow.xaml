@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         mc:Ignorable="d"
-        Title="Bibliophile System" Height="400" Width="600"
+        Title="Bibliophile System" Height="800" Width="1000"
         Background="WhiteSmoke">
 
     <Window.Resources>
@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
-                   Margin="20"
+                   Margin="20 50 0 0"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    FontSize="50"
@@ -34,7 +34,8 @@
 
         <StackPanel Grid.Row ="1" 
                     Grid.Column ="0" 
-                    Orientation="Vertical">
+                    Orientation="Vertical"
+                    Margin="0 100 0 0">
             <TextBlock 
                 Text="Admin Login" 
                 HorizontalAlignment="Center"
@@ -48,8 +49,8 @@
                 Padding="5"
                 CornerRadius="10,0,10,0">
                 <Button Content="{StaticResource adminimg}" 
-                Width="200" 
-                Height="160" 
+                Width="300" 
+                Height="300" 
                 Click="Admin_Button_Click"
                 FocusVisualStyle="{x:Null}"/>
             </Border>
@@ -57,7 +58,8 @@
 
         <StackPanel Grid.Row="1" 
                     Grid.Column="1"
-                    Orientation="Vertical">
+                    Orientation="Vertical"
+                    Margin="0 100 0 0">
             <TextBlock 
                 Text="Guest Login" 
                 HorizontalAlignment="Center"
@@ -71,8 +73,8 @@
                 Padding="5"
                 CornerRadius="10,0,10,0" >
                 <Button Content="{StaticResource userimg}" 
-                Width="200" 
-                Height="160" 
+                Width="300" 
+                Height="300" 
                 Click="User_Button_Click"
                 FocusVisualStyle="{x:Null}"/>
             </Border>

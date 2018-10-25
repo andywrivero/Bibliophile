@@ -36,8 +36,8 @@
             <StackPanel Orientation="Horizontal" Margin="45 20 0 0">
                 <Label>Total Copies:</Label>
                 <TextBox Text="{Binding TotalCopies}" Width="100" Height="30"/>
-                <Label>Available Copies:</Label>
-                <TextBox Text="{Binding AvailableCopies}" Width="100" Height="30"/>
+                <Label Name="availablecopieslabel">Available Copies:</Label>
+                <TextBox Name="availablecopiesbox" Text="{Binding AvailableCopies}" Width="100" Height="30"/>
             </StackPanel>
         </StackPanel>
     </Grid>

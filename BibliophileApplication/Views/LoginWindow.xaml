@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         mc:Ignorable="d"
-        Title="Admin Password Verification" Height="200" Width="350"
+        Title="Admin Password Verification" Height="200" Width="400"
         ResizeMode="NoResize">
-    <Grid>
+    
+    <Grid HorizontalAlignment="Center">
         <Label Content="UserName" 
                HorizontalAlignment="Left" 
                Margin="21,36,0,0" 
@@ -25,13 +26,13 @@
                  Margin="96,39,0,0" 
                  TextWrapping="Wrap"  
                  VerticalAlignment="Top" 
-                 Width="214"
+                 Width="250"
                  KeyDown="TextBox_KeyDown"/>
         <PasswordBox Name="passwordbox"
                      HorizontalAlignment="Left" 
                      Margin="96,75,0,0" 
                      VerticalAlignment="Top" 
-                     Width="214" 
+                     Width="250" 
                      Height="24"
                      KeyDown="TextBox_KeyDown"/>
         <Button Content="Accept" 

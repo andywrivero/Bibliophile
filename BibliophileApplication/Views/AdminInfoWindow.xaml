@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
-        Title="AdminInfoWindow" Height="500" Width="800">
+        Title="" Height="500" Width="800">
 
     <Window.Resources>
         <Style TargetType="Button">
@@ -16,14 +16,14 @@
     </Window.Resources>
 
     <StackPanel Orientation="Vertical">
-        <mycontrols:AdminInfoControl Editable="True"/>
+        <mycontrols:AdminInfoControl Editable="True" DataContext="{Binding}"/>
         <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
             <Label Margin="35 0 0 0">Password:</Label>
             <PasswordBox Name="passwordbox"  Width="200"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 0">
-            <Button Content="Accept" Click="Button_Click"/>
-            <Button Margin="200 0 0 0"  Content="Cancel" Click="Button_Click_1"/>
+            <Button Content="Accept" Click="Accept_Button_Click"/>
+            <Button Margin="200 0 0 0"  Content="Cancel" Click="Cancel_Button_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>
