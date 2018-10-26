@@ -13,16 +13,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BibliophileApplication.Models;
 
 namespace BibliophileApplication.MyControls
 {
     public partial class UserCardInfoControl : UserControl
     {
-        public Models.User User
+        public User User
         {
             get
             {
-                return DataContext as Models.User;
+                return DataContext as User;
             }
 
             set
