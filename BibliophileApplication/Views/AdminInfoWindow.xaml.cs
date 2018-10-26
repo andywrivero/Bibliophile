@@ -36,7 +36,7 @@ namespace BibliophileApplication.Views
             DataContext = new Admin();
 
             mode = MODE.NEWADMIN;
-            Title = "New Admi Employee";
+            Title = "New Admin Employee";
         }
 
         // This constructor for this window is to modify an existing admin employee
@@ -111,6 +111,7 @@ namespace BibliophileApplication.Views
                 admin.HireDate = modAdmin.HireDate;
                 admin.UserName = modAdmin.UserName;
 
+                // if the user types a new password then change it
                 if (!string.IsNullOrWhiteSpace(passwordbox.Password))
                     admin.PassWord = Others.PasswordHasher.HashPassword(passwordbox.Password);
 

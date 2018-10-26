@@ -28,12 +28,12 @@ namespace BibliophileApplication.Views
         // This contructor is to be called to modify an existing user
         public UserInfoWindow(User user)
         {
-            this.user = user ?? throw new NullReferenceException("Invalid / null reference user exception");
+            this.user = user ?? throw new NullReferenceException("Invalid null reference user exception");
 
             InitializeComponent();
 
-            // Set up the user card
-            usercardinfocontrol.DataContext = new User()
+            // Set up the datacontext
+            DataContext = new User()
             {
                 UserId = user.UserId,
                 FirstName = user.FirstName,
@@ -46,23 +46,27 @@ namespace BibliophileApplication.Views
                 Age = user.Age
             };
 
-            // save the mode
+            // window mode
             mode = MODE.MODIFYUSER;
+
+            Title = "Modify User";
         }
 
         // This constructor is to be called to add a new user
         public UserInfoWindow(ObservableCollection<User> users)
         {
             // hold the list where we're adding a new user
-            this.users = users ?? throw new NullReferenceException("Invalid user list");
+            this.users = users ?? throw new NullReferenceException("Invalid null reference user list");
 
             InitializeComponent();
 
             // Initialize the user card
-            usercardinfocontrol.DataContext = new User();
+            DataContext = new User();
 
-            // save the mode
+            // window mode
             mode = MODE.NEWUSER;
+
+            Title = "New User";
         }
 
         private void Accept_Button_Click(object sender, RoutedEventArgs e)

@@ -52,7 +52,7 @@ namespace BibliophileApplication.Views
                 // Get the admin employee with such username and password
                 Admin admin = GetAdmin(loginVM.UserName, loginVM.PassWord);
 
-                // Check the login information
+                // Check such admin exist
                 if (admin == null)
                 {
                     MessageBox.Show("Incorrect login information", "Error", MessageBoxButton.OK);
@@ -61,8 +61,10 @@ namespace BibliophileApplication.Views
 
                 // Create a new admin window
                 AdminMainWindow adminWindow = new AdminMainWindow(admin.UserId.Value);
+
                 // handle the closed event of the admin window to restore the main window
                 adminWindow.Closed += (sender2, e2) => { Show(); };
+
                 // hide main window, and show admin window
                 Hide();
                 adminWindow.Show();
@@ -72,9 +74,11 @@ namespace BibliophileApplication.Views
         private void User_Button_Click(object sender, RoutedEventArgs e)
         {
             // create user window
-            GuestMainWindow userWindow = new GuestMainWindow();
+            UserMainWindow userWindow = new UserMainWindow();
+
             // handle the closed event of the user window to restore the main window
             userWindow.Closed += (sender2, e2) => { Show(); };
+
             // hide main window, and show user window
             Hide();
             userWindow.Show();

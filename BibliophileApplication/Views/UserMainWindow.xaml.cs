@@ -16,10 +16,10 @@ using BibliophileApplication.Models;
 
 namespace BibliophileApplication.Views
 {
-    public partial class GuestMainWindow : Window
+    public partial class UserMainWindow : Window
     {
-        // A UserMainWindow for the Guest
-        public GuestMainWindow()
+        // The User Main Window
+        public UserMainWindow()
         {
             InitializeComponent();
 
@@ -30,13 +30,14 @@ namespace BibliophileApplication.Views
             };
         }
 
+        // No Observable collection is used because users are not to modify data
         private List<Book> GetBookList ()
         {
             // The book list to be returned
             List<Book> bookList;
 
             // Load book collection from database
-            using (BibliophileContext db = new BibliophileContext())
+            using (var db = new BibliophileContext())
             {
                 db.Books.Load();
                 bookList = db.Books.Local.ToList ();
@@ -50,54 +51,62 @@ namespace BibliophileApplication.Views
             // Check there's a book selection
             if (datagrid.SelectedIndex > -1) 
             {
-                // get datacontext viewmodel
-                UserMainWindowViewModel viewmodel = DataContext as UserMainWindowViewModel;
+                // get the user id and email 
+                string strUserId = (DataContext as UserMainWindowViewModel).UserId;
+                string email = (DataContext as UserMainWindowViewModel).Email;
 
-                // get the user id and email from this viewmodel
-                string strUserId = viewmodel.UserId;
-                string email = viewmodel.Email;
-
-                // Validate for nullity
-                if (string.IsNullOrWhiteSpace(strUserId) || string.IsNullOrWhiteSpace(email))
+                // Validate for request information
+                if (string.IsNullOrWhiteSpace(strUserId) || string.IsNullOrWhiteSpace(email) || !int.TryParse(strUserId, out int userid))
                 {
                     MessageBox.Show("Enter a valid User Card Id and associated Email", "Error", MessageBoxButton.OK);
                     return;
                 }
 
-                // Validate user id is an integer
-                if (!int.TryParse (strUserId, out int userid))
-                {
-                    MessageBox.Show("Enter a valid User Card Id", "Error", MessageBoxButton.OK);
-                    return;
-                }
+                // get the selected book
+                int bookid = (datagrid.SelectedItem as Book).BookId.Value;
 
                 // Search the database for the user and book
-                using (BibliophileContext db = new BibliophileContext())
+                using (var db = new BibliophileContext())
                 {
                     // Find user with requested user id and email
                     User user = db.Users.FirstOrDefault(u => u.UserId == userid && u.Email == email);
 
-                    // If the user is not found print a message
+                    // Check the user exist with such userid and email
                     if (user == null)
                     {
                         MessageBox.Show("User not found!", "Error", MessageBoxButton.OK);
                         return;
                     }
 
-                    // Check the number of book copies this user has
-                    if (user.Books.Count > User.MAXCOPIES)
+                    // Check the number of book copies this user has is not more than what's allowed
+                    if (user.Books.Count >= User.MAXCOPIES)
                     {
                         MessageBox.Show($"Users cannot checkout more than {User.MAXCOPIES} books", "Error", MessageBoxButton.OK);
                         return;
                     }
 
-                    // Insert code here.
-                    // The code below should place a user request in the Request List in the Database. 
-                    // This way a copy can be held at the library, or in case no copy is availble the user can be notified by email
-                    // later on when one becomes available based on the user current position in the Request List
+                    // Find the selected book in the databse
+                    Book book = db.Books.Find(bookid);
 
-                    // Notice the message below is not really doing anything yet
-                    MessageBox.Show("Your request has been submitted successfully!", "Info", MessageBoxButton.OK);
+                    // Check if there are enough copies of the book available
+                    if (book.AvailableCopies > 0)
+                    {
+                        // Check out the book
+                        user.Books.Add(book);
+                        book.Users.Add(user);
+                        book.AvailableCopies--;
+                        db.SaveChanges();
+
+                        MessageBox.Show("Your copy has been reserved", "Info", MessageBoxButton.OK);
+                    }
+                    else
+                    {
+                        // This is a pending feature that is not yet implemented
+                        // There will be a list of pending request and users are notified by email when a copy of the book
+                        // they want becomes available
+
+                        MessageBox.Show("There are not enough copies of the book. Your request is pending", "Info", MessageBoxButton.OK);
+                    } 
                 }
             }
             else

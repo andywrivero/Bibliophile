@@ -36,7 +36,12 @@ namespace BibliophileApplication.Views
             // When the window closes save any pending changes and dispose of the context
             Closed += (sender, e) =>
             {
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception) { MessageBox.Show("Something went wrong while closing the window", "Error", MessageBoxButton.OK); }
+
                 db.Dispose();
             };
 
@@ -51,14 +56,14 @@ namespace BibliophileApplication.Views
             viewmodel.Users = db.Users.Local;
             viewmodel.Books = db.Books.Local;
 
-            // Select the two custom queries of the lists. One for the Admins, the other one for the checkouts
+            // Select the two custom queries from the user list. One for the Admins, the other one for the checkouts
             viewmodel.Admins = new ObservableCollection<Admin>(from u in viewmodel.Users
-                                                                      where u is Admin
-                                                                      select u as Admin);
+                                                               where u is Admin
+                                                               select u as Admin);
 
             viewmodel.Checkouts = new ObservableCollection<Tuple<User, Book>>(from u in viewmodel.Users
-                                                                                            from b in u.Books
-                                                                                            select Tuple.Create(u, b));
+                                                                              from b in u.Books
+                                                                              select Tuple.Create(u, b));
 
             // When the user collection changes we check if there was an admin employee and we add it to the query
             viewmodel.Users.CollectionChanged += (sender, e) =>
@@ -81,7 +86,7 @@ namespace BibliophileApplication.Views
                 Title = $"Logged in as {windowAdmin.UserName}";
             else
             {
-                throw new Exception("Exception. Only employees can open the admin window");
+                throw new Exception("Exception. Only admin employees can open this window");
             }
         }
 
@@ -106,13 +111,15 @@ namespace BibliophileApplication.Views
         {
             if (usergrid.SelectedIndex > -1)
             {
-                if (viewmodel.Users[usergrid.SelectedIndex] is Admin)
+                User user = usergrid.SelectedItem as User;
+
+                if (user is Admin)
                 {
                     MessageBox.Show("Delete admin employee in the Employee tab", "Error", MessageBoxButton.OK);
                 }
-                else if (viewmodel.Users[usergrid.SelectedIndex].Books.Count > 0)
+                else if (user.Books.Count > 0)
                 {
-                    MessageBox.Show("User cannot be removed", "Error", MessageBoxButton.OK);
+                    MessageBox.Show("User cannot be removed. Return books to the library first", "Error", MessageBoxButton.OK);
                 }
                 else
                 {
@@ -152,11 +159,14 @@ namespace BibliophileApplication.Views
 
                 if (employee.Books.Count > 0)
                 {
-                    MessageBox.Show("Admin employee cannot be removed", "Error", MessageBoxButton.OK);
+                    MessageBox.Show("Admin employee cannot be removed. Return books to the library first", "Error", MessageBoxButton.OK);
                 }
                 else
                 {
+                    // remove the admin employee
+                    // remove it from the db user list
                     viewmodel.Users.Remove(employee);
+                    // we must also remove it from the admin query
                     viewmodel.Admins.RemoveAt(employeegrid.SelectedIndex);
                     db.SaveChanges();
                 }
