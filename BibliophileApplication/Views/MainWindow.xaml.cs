@@ -23,6 +23,20 @@ namespace BibliophileApplication.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            //using (var db = new BibliophileContext())
+            //{
+            //    db.Users.Add(new Admin()
+            //    {
+            //        UserId = 1,
+            //        UserName = "s",
+            //        FirstName = "s",
+            //        LastName = "s",
+            //        PassWord = Others.PasswordHasher.HashPassword("s")
+            //    });
+
+            //    db.SaveChanges();
+            //}
         }
 
         private void Admin_Button_Click(object sender, RoutedEventArgs e)
