@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,7 +55,7 @@ namespace BibliophileApplication.MyControls
         {
             if (!usercardcontrol.ValidateInfo()) return false;
 
-            if (string.IsNullOrWhiteSpace (usernametb.Text))
+            if (string.IsNullOrWhiteSpace (usernametb.Text) || !(Regex.IsMatch(usernametb.Text, @"^[a-zA-Z]+$")))
             {
                 MessageBox.Show("Enter a valid UserName", "Error", MessageBoxButton.OK);
                 return false;

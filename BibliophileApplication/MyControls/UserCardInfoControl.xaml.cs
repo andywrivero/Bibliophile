@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -73,7 +75,7 @@ namespace BibliophileApplication.MyControls
             }
         }
 
-        public bool ValidateInfo ()
+        public bool ValidateInfo()
         {
             if (string.IsNullOrWhiteSpace(cardidbox.Text) || !int.TryParse(cardidbox.Text, out int cardid))
             {
@@ -81,18 +83,51 @@ namespace BibliophileApplication.MyControls
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(firstnamebox.Text) || string.IsNullOrWhiteSpace(lastnamebox.Text))
+            if (string.IsNullOrWhiteSpace(firstnamebox.Text) || string.IsNullOrWhiteSpace(lastnamebox.Text) || !(Regex.IsMatch(firstnamebox.Text, @"^[a-zA-Z]+$")) || !(Regex.IsMatch(lastnamebox.Text, @"^[a-zA-Z]+$")))
             {
                 MessageBox.Show("Please enter valid first name and last name", "Error", MessageBoxButton.OK);
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(addressbox.Text) || string.IsNullOrWhiteSpace(citybox.Text) ||
-                string.IsNullOrWhiteSpace(statebox.Text) || string.IsNullOrWhiteSpace (zipbox.Text) ||
-                !int.TryParse(zipbox.Text, out int zip))
+            if (string.IsNullOrWhiteSpace(addressbox.Text))
             {
                 MessageBox.Show("Enter some address", "Error", MessageBoxButton.OK);
                 return false;
+            }
+            if (string.IsNullOrWhiteSpace(statebox.Text) || !(Regex.IsMatch(statebox.Text, "^(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$")))
+            {
+                MessageBox.Show("Enter a valid state", "Error", MessageBoxButton.OK);
+                return false;
+
+            }
+            if (string.IsNullOrWhiteSpace(citybox.Text) || !(Regex.IsMatch(citybox.Text, @"^[a-zA-Z]+$")))
+            {
+
+                MessageBox.Show("Enter a City", "Error", MessageBoxButton.OK);
+                return false;
+
+            }
+            if (string.IsNullOrWhiteSpace(zipbox.Text) || !int.TryParse(zipbox.Text, out int zip))
+            {
+
+                MessageBox.Show("Enter a valid zipcode", "Error", MessageBoxButton.OK);
+                return false;
+
+            }
+
+            if (string.IsNullOrWhiteSpace(emailbox.Text))
+            {
+                try
+                {
+                    MailAddress m = new MailAddress(emailbox.Text);
+
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Please enter a valid email address", "Error", MessageBoxButton.OK);
+                    return false;
+                }
+
             }
 
             if (combobox.SelectedIndex == -1)

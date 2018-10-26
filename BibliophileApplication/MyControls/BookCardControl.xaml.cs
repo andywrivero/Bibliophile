@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -106,7 +107,7 @@ namespace BibliophileApplication.MyControls
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace (authorbox.Text))
+            if (string.IsNullOrWhiteSpace (authorbox.Text) || !(Regex.IsMatch(authorbox.Text, @"^[a-zA-Z]+$")))
             {
                 MessageBox.Show("Please enter valid author", "Error", MessageBoxButton.OK);
                 return false;
@@ -146,6 +147,12 @@ namespace BibliophileApplication.MyControls
                 {
                     MessageBox.Show("Enter number of available copies greater than 0", "Error", MessageBoxButton.OK);
                     return false;
+                }
+                else if(ac > tc)
+                {
+                    MessageBox.Show("Available copies cannont be more then Total copies", "Error", MessageBoxButton.OK);
+                    return false;
+
                 }
             }
 
