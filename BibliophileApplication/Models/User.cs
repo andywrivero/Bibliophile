@@ -32,11 +32,8 @@ namespace BibliophileApplication.Models
 
             set
             {
-                if (_userId == null) // ID can only be set once
-                {
-                    _userId = value;
-                    NotifyPropertyChanged("UserId");
-                }
+                _userId = value;
+                NotifyPropertyChanged("UserId");
             }
         }
         public string FirstName

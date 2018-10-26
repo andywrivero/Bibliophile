@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
-        Title="AdminMainWindow" Height="550" SizeToContent="Width">
+        Title="" Height="550" SizeToContent="Width">
 
     <TabControl>
         <TabItem Header="Users" Height="30" Width="80">

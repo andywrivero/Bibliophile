@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BibliophileApplication.ViewModels;
+using BibliophileApplication.Models;
+using BibliophileApplication.Others;
 
 namespace BibliophileApplication.Views
 {
     public partial class MainWindow : Window
     {
-        private ViewModels.LoginWindowViewModel LoginVM { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
@@ -27,30 +28,28 @@ namespace BibliophileApplication.Views
         private void Admin_Button_Click(object sender, RoutedEventArgs e)
         {
             // Create a login window 
-            LoginWindow loginWindow = new LoginWindow(LoginVM = new ViewModels.LoginWindowViewModel()) { Owner = this };
-            // handle the closed event of the login window to authenticate the admin
-            loginWindow.Closed += LoginWindow_Closed;
-            // Show login window
+            LoginWindowViewModel loginVM;
+            LoginWindow loginWindow = new LoginWindow(loginVM = new LoginWindowViewModel()) { Owner = this };
             loginWindow.ShowDialog();
-        }
 
-        private void LoginWindow_Closed(object sender, EventArgs e)
-        {
-            if (LoginVM.UserName == null && LoginVM.Password == null) return;
-
-            // Validate admin login information
-            Models.Admin admin = GetAdmin(LoginVM.UserName, LoginVM.Password);
-
-            // check the admin exist
-            if (admin == null)
-                MessageBox.Show("UserName/Password mismatch. Try again", "Error", MessageBoxButton.OK);
-            else
+            // Check if a valid username and password was set in the view model by the login window
+            if (loginVM.UserName != null && loginVM.PassWord != null)
             {
-                // create the admin window 
-                AdminMainWindow adminWindow = new AdminMainWindow();
-                // handle the closed event of the admin window to restore the main window 
+                // Get the admin employee with such username and password
+                Admin admin = GetAdmin(loginVM.UserName, loginVM.PassWord);
+
+                // Check the login information
+                if (admin == null)
+                {
+                    MessageBox.Show("Incorrect login information", "Error", MessageBoxButton.OK);
+                    return;
+                }
+
+                // Create a new admin window
+                AdminMainWindow adminWindow = new AdminMainWindow(admin.UserId.Value);
+                // handle the closed event of the admin window to restore the main window
                 adminWindow.Closed += (sender2, e2) => { Show(); };
-                // Hide main window, and show admin window
+                // hide main window, and show admin window
                 Hide();
                 adminWindow.Show();
             }
@@ -68,19 +67,16 @@ namespace BibliophileApplication.Views
         }
 
         // Find and return the admin from the database that matches username and password
-        private Models.Admin GetAdmin (string username, string password)
+        private Admin GetAdmin(string username, string password)
         {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) return null;
+            Admin admin = null;
 
-            Models.Admin admin = null;
-
-            using (var db = new Models.BibliophileContext())
+            using (var db = new BibliophileContext())
             {
-                var admins = (from user in db.Users
-                              where user is Models.Admin
-                              select user as Models.Admin).AsEnumerable();
-
-                admin = admins.FirstOrDefault(a => a.UserName == username && Others.PasswordHasher.VerifyPassword(password, a.PassWord));
+                // Find the admin employee in the database that matches username and password
+                admin = (from user in db.Users
+                         where user is Admin
+                         select user as Admin).AsEnumerable().FirstOrDefault(a => a.UserName == username && PasswordHasher.VerifyPassword(password, a.PassWord));
             }
 
             return admin;

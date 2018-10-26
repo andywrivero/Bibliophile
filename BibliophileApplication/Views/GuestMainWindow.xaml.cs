@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data.Entity;
+using BibliophileApplication.ViewModels;
+using BibliophileApplication.Models;
 
 namespace BibliophileApplication.Views
 {
@@ -22,19 +24,19 @@ namespace BibliophileApplication.Views
             InitializeComponent();
 
             // Set the view model of this window
-            DataContext = new ViewModels.UserMainWindowViewModel()
+            DataContext = new UserMainWindowViewModel()
             {
                 Books = GetBookList()
             };
         }
 
-        private List<Models.Book> GetBookList ()
+        private List<Book> GetBookList ()
         {
             // The book list to be returned
-            List<Models.Book> bookList;
+            List<Book> bookList;
 
             // Load book collection from database
-            using (Models.BibliophileContext db = new Models.BibliophileContext())
+            using (BibliophileContext db = new BibliophileContext())
             {
                 db.Books.Load();
                 bookList = db.Books.Local.ToList ();
@@ -46,10 +48,10 @@ namespace BibliophileApplication.Views
         private void Request_Button_Click(object sender, RoutedEventArgs e)
         {
             // Check there's a book selection
-            if (datagrid.SelectedItem is Models.Book book) 
+            if (datagrid.SelectedIndex > -1) 
             {
                 // get datacontext viewmodel
-                ViewModels.UserMainWindowViewModel viewmodel = DataContext as ViewModels.UserMainWindowViewModel;
+                UserMainWindowViewModel viewmodel = DataContext as UserMainWindowViewModel;
 
                 // get the user id and email from this viewmodel
                 string strUserId = viewmodel.UserId;
@@ -70,10 +72,10 @@ namespace BibliophileApplication.Views
                 }
 
                 // Search the database for the user and book
-                using (Models.BibliophileContext db = new Models.BibliophileContext())
+                using (BibliophileContext db = new BibliophileContext())
                 {
                     // Find user with requested user id and email
-                    Models.User user = db.Users.FirstOrDefault(u => u.UserId == userid && u.Email == email);
+                    User user = db.Users.FirstOrDefault(u => u.UserId == userid && u.Email == email);
 
                     // If the user is not found print a message
                     if (user == null)
@@ -83,9 +85,9 @@ namespace BibliophileApplication.Views
                     }
 
                     // Check the number of book copies this user has
-                    if (user.Books.Count > Models.User.MAXCOPIES)
+                    if (user.Books.Count > User.MAXCOPIES)
                     {
-                        MessageBox.Show($"Users cannot checkout more than {Models.User.MAXCOPIES} books", "Error", MessageBoxButton.OK);
+                        MessageBox.Show($"Users cannot checkout more than {User.MAXCOPIES} books", "Error", MessageBoxButton.OK);
                         return;
                     }
 

@@ -12,21 +12,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BibliophileApplication.ViewModels;
+using BibliophileApplication.Models;
 
 namespace BibliophileApplication.Views
 {
     public partial class BookCheckoutWindow : Window
     {
-        private ObservableCollection<Models.User> users;
-        private ViewModels.CheckoutViewModel viewmodel;
+        private ObservableCollection<User> users;
+        private CheckoutViewModel viewmodel;
 
-        public BookCheckoutWindow(ObservableCollection<Models.User> users, Models.Book book)
+        public BookCheckoutWindow(ObservableCollection<User> users, Book book)
         {
             this.users = users ?? throw new NullReferenceException("Users null reference exception in BookCheckoutWindow");
 
             InitializeComponent();
 
-            viewmodel = new ViewModels.CheckoutViewModel()
+            viewmodel = new CheckoutViewModel()
             {
                 Book = book ?? throw new NullReferenceException ("Book null reference exception in BookCheckoutWindow")
             };
@@ -44,7 +46,7 @@ namespace BibliophileApplication.Views
             {
                 MessageBox.Show("User not found", "Error", MessageBoxButton.OK);
             }
-            else if (user?.Books.Count >= Models.User.MAXCOPIES)
+            else if (user?.Books.Count >= User.MAXCOPIES)
             {
                 MessageBox.Show("User cannot not rent more books", "Error", MessageBoxButton.OK);
             }

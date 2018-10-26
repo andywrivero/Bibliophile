@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BibliophileApplication.Models;
+using BibliophileApplication.ViewModels;
 
 namespace BibliophileApplication.Views
 {
@@ -20,18 +22,18 @@ namespace BibliophileApplication.Views
         private enum MODE { NEWUSER, MODIFYUSER };
         private MODE mode;
 
-        private ObservableCollection<Models.User> users;
-        private Models.User user;
+        private ObservableCollection<User> users;
+        private User user;
 
         // This contructor is to be called to modify an existing user
-        public UserInfoWindow(Models.User user)
+        public UserInfoWindow(User user)
         {
             this.user = user ?? throw new NullReferenceException("Invalid / null reference user exception");
 
             InitializeComponent();
 
             // Set up the user card
-            usercardinfocontrol.User = new Models.User()
+            usercardinfocontrol.DataContext = new User()
             {
                 UserId = user.UserId,
                 FirstName = user.FirstName,
@@ -45,11 +47,11 @@ namespace BibliophileApplication.Views
             };
 
             // save the mode
-            this.mode = MODE.MODIFYUSER;
+            mode = MODE.MODIFYUSER;
         }
 
         // This constructor is to be called to add a new user
-        public UserInfoWindow(ObservableCollection<Models.User> users)
+        public UserInfoWindow(ObservableCollection<User> users)
         {
             // hold the list where we're adding a new user
             this.users = users ?? throw new NullReferenceException("Invalid user list");
@@ -57,24 +59,35 @@ namespace BibliophileApplication.Views
             InitializeComponent();
 
             // Initialize the user card
-            usercardinfocontrol.User = new Models.User();
+            usercardinfocontrol.DataContext = new User();
 
             // save the mode
-            this.mode = MODE.NEWUSER;
+            mode = MODE.NEWUSER;
         }
 
         private void Accept_Button_Click(object sender, RoutedEventArgs e)
         {
-            // remember to validate
+            // first validate the user card info
+            if (!usercardinfocontrol.ValidateInfo()) return;
 
             if (mode == MODE.NEWUSER)
-            {
-                // Add the new user
+            { 
+                if (users.FirstOrDefault(u => u.UserId == usercardinfocontrol.User.UserId) != null)
+                {
+                    MessageBox.Show("Enter a different card id", "Error", MessageBoxButton.OK);
+                    return;
+                }
+
                 users.Add(usercardinfocontrol.User);
-            }
+            } 
             else
             {
-                user.UserId = usercardinfocontrol.User.UserId;
+                if (user.UserId != usercardinfocontrol.User.UserId)
+                {
+                    MessageBox.Show("Card id cannot be modified", "Error", MessageBoxButton.OK);
+                    return;
+                }
+
                 user.FirstName = usercardinfocontrol.User.FirstName;
                 user.LastName = usercardinfocontrol.User.LastName;
                 user.Address = usercardinfocontrol.User.Address;

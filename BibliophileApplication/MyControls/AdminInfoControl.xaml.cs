@@ -49,5 +49,24 @@ namespace BibliophileApplication.MyControls
             hireddp.IsEnabled = editOption;
             usercardcontrol.Editable = editOption;
         }
+
+        public bool ValidateInfo ()
+        {
+            if (!usercardcontrol.ValidateInfo()) return false;
+
+            if (string.IsNullOrWhiteSpace (usernametb.Text))
+            {
+                MessageBox.Show("Enter a valid UserName", "Error", MessageBoxButton.OK);
+                return false;
+            }
+
+            if (!hireddp.SelectedDate.HasValue || hireddp.SelectedDate.Value.Year < (DateTime.Now.Year - 150))
+            {
+                MessageBox.Show("Enter a valid hire date", "Error", MessageBoxButton.OK);
+                return false;
+            }
+
+            return true;
+        }
     }
 }

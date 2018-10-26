@@ -14,21 +14,24 @@ using System.Windows.Shapes;
 using System.Data.Entity;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using BibliophileApplication.ViewModels;
+using BibliophileApplication.Models;
 
 namespace BibliophileApplication.Views
 {
     public partial class AdminMainWindow : Window
     {
         // private fields viewmode, and the database context
-        private ViewModels.AdminWindowViewModel viewmodel;
-        private Models.BibliophileContext db;
+        private AdminWindowViewModel viewmodel;
+        private BibliophileContext db;
+        private Admin windowAdmin;
 
-        public AdminMainWindow()
+        public AdminMainWindow(int adminId)
         {
             InitializeComponent();
 
             // Create the databse context of this window
-            db = new Models.BibliophileContext();
+            db = new BibliophileContext();
 
             // When the window closes save any pending changes and dispose of the context
             Closed += (sender, e) =>
@@ -38,7 +41,7 @@ namespace BibliophileApplication.Views
             };
 
             // Initialize the viewmodel of this window
-            viewmodel = new ViewModels.AdminWindowViewModel();
+            viewmodel = new AdminWindowViewModel();
 
             // Load the data sets
             db.Users.Load ();
@@ -49,11 +52,11 @@ namespace BibliophileApplication.Views
             viewmodel.Books = db.Books.Local;
 
             // Select the two custom queries of the lists. One for the Admins, the other one for the checkouts
-            viewmodel.Admins = new ObservableCollection<Models.Admin>(from u in viewmodel.Users
-                                                                      where u is Models.Admin
-                                                                      select u as Models.Admin);
+            viewmodel.Admins = new ObservableCollection<Admin>(from u in viewmodel.Users
+                                                                      where u is Admin
+                                                                      select u as Admin);
 
-            viewmodel.Checkouts = new ObservableCollection<Tuple<Models.User, Models.Book>>(from u in viewmodel.Users
+            viewmodel.Checkouts = new ObservableCollection<Tuple<User, Book>>(from u in viewmodel.Users
                                                                                             from b in u.Books
                                                                                             select Tuple.Create(u, b));
 
@@ -63,12 +66,23 @@ namespace BibliophileApplication.Views
                 if (e.Action == NotifyCollectionChangedAction.Add)
                 {
                     foreach (var user in e.NewItems)
-                        if (user is Models.Admin admin)
+                        if (user is Admin admin)
                             viewmodel.Admins.Add(admin);
                 }
             };
 
             DataContext = viewmodel;
+
+            // Find the admin owner of this window by Id
+            windowAdmin = viewmodel.Admins.FirstOrDefault(a => a.UserId == adminId);
+
+            // Check such admin exist
+            if (windowAdmin != null)
+                Title = $"Logged in as {windowAdmin.UserName}";
+            else
+            {
+                throw new Exception("Exception. Only employees can open the admin window");
+            }
         }
 
         private void AddUser_MenuItem_Click(object sender, RoutedEventArgs e)
@@ -83,7 +97,7 @@ namespace BibliophileApplication.Views
             if (usergrid.SelectedIndex > -1)
             {
                 // create a modifying user window and pass the reference of the user that needs to be modified
-                new UserInfoWindow(usergrid.SelectedItem as Models.User).ShowDialog();
+                new UserInfoWindow(usergrid.SelectedItem as User).ShowDialog();
                 db.SaveChanges();
             }
         }
@@ -92,7 +106,7 @@ namespace BibliophileApplication.Views
         {
             if (usergrid.SelectedIndex > -1)
             {
-                if (viewmodel.Users[usergrid.SelectedIndex] is Models.Admin)
+                if (viewmodel.Users[usergrid.SelectedIndex] is Admin)
                 {
                     MessageBox.Show("Delete admin employee in the Employee tab", "Error", MessageBoxButton.OK);
                 }
@@ -119,7 +133,7 @@ namespace BibliophileApplication.Views
         {
             if (employeegrid.SelectedIndex > -1)
             {
-                new AdminInfoWindow(employeegrid.SelectedItem as Models.Admin).ShowDialog();
+                new AdminInfoWindow(employeegrid.SelectedItem as Admin).ShowDialog();
                 db.SaveChanges();
             }
         }
@@ -134,7 +148,7 @@ namespace BibliophileApplication.Views
 
             if (employeegrid.SelectedIndex > -1)
             {
-                Models.User employee = employeegrid.SelectedItem as Models.User;
+                User employee = employeegrid.SelectedItem as User;
 
                 if (employee.Books.Count > 0)
                 {
@@ -159,7 +173,7 @@ namespace BibliophileApplication.Views
         {
             if (bookgrid.SelectedIndex > -1)
             {
-                new BookInfoWindow(bookgrid.SelectedItem as Models.Book).ShowDialog();
+                new BookInfoWindow(bookgrid.SelectedItem as Book).ShowDialog();
                 db.SaveChanges();
             }
         }
@@ -184,8 +198,8 @@ namespace BibliophileApplication.Views
         {
             if (checkoutgrid.SelectedIndex > -1)
             {
-                var user = (checkoutgrid.SelectedItem as Tuple<Models.User, Models.Book>).Item1;
-                var book = (checkoutgrid.SelectedItem as Tuple<Models.User, Models.Book>).Item2;
+                var user = (checkoutgrid.SelectedItem as Tuple<User, Book>).Item1;
+                var book = (checkoutgrid.SelectedItem as Tuple<User, Book>).Item2;
 
                 user.Books.Remove(book);
 
@@ -202,12 +216,20 @@ namespace BibliophileApplication.Views
         {
             if (bookgrid.SelectedIndex > -1)
             {
-                new BookCheckoutWindow(viewmodel.Users, bookgrid.SelectedItem as Models.Book).ShowDialog();
+                Book book = bookgrid.SelectedItem as Book;
+
+                if (book.AvailableCopies <= 0)
+                {
+                    MessageBox.Show("No more copies of this book can be checked out", "Error", MessageBoxButton.OK);
+                    return;
+                }
+
+                new BookCheckoutWindow(viewmodel.Users, book).ShowDialog();
 
                 // Update the checkout list
-                viewmodel.Checkouts = new ObservableCollection<Tuple<Models.User, Models.Book>>(from u in viewmodel.Users
-                                                                                                from b in u.Books
-                                                                                                select Tuple.Create(u, b));
+                viewmodel.Checkouts = new ObservableCollection<Tuple<User, Book>>(from u in viewmodel.Users
+                                                                                  from b in u.Books
+                                                                                  select Tuple.Create(u, b));
 
                 db.SaveChanges();
             }

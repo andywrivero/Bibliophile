@@ -91,5 +91,65 @@ namespace BibliophileApplication.MyControls
                         GetAllTextBoxes(VisualTreeHelper.GetChild(element, i), controls);
             }
         }
+
+        public bool ValidateInfo ()
+        {
+            if (string.IsNullOrEmpty(isbnbox.Text) || !int.TryParse(isbnbox.Text, out int isbn))
+            {
+                MessageBox.Show("Please enter valid ISBN", "Error", MessageBoxButton.OK);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace (titlebox.Text))
+            {
+                MessageBox.Show("Please enter valid title", "Error", MessageBoxButton.OK);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace (authorbox.Text))
+            {
+                MessageBox.Show("Please enter valid author", "Error", MessageBoxButton.OK);
+                return false;
+            }
+
+            if (yearcombobox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select publication year", "Error", MessageBoxButton.OK);
+                return false;
+            }
+
+            if (genrecombobox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select genre", "Error", MessageBoxButton.OK);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(totalcopiesbox.Text) || !int.TryParse(totalcopiesbox.Text, out int tc))
+            {
+                MessageBox.Show("Please enter valid number of total copies", "Error", MessageBoxButton.OK);
+                return false;
+            }
+            else if (tc <= 0)
+            {
+                MessageBox.Show("Enter number of total copies greater than 0", "Error", MessageBoxButton.OK);
+                return false;
+            }
+
+            if (availablecopiesbox.Visibility == Visibility.Visible)
+            {
+                if (string.IsNullOrWhiteSpace(availablecopiesbox.Text) || !int.TryParse(availablecopiesbox.Text, out int ac))
+                {
+                    MessageBox.Show("Please enter valid number of available copies", "Error", MessageBoxButton.OK);
+                    return false;
+                }
+                else if (ac <= 0)
+                {
+                    MessageBox.Show("Enter number of available copies greater than 0", "Error", MessageBoxButton.OK);
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

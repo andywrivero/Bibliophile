@@ -12,38 +12,37 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BibliophileApplication.ViewModels;
 
 namespace BibliophileApplication.Views
 {
     public partial class LoginWindow : Window
     {
-        private ViewModels.LoginWindowViewModel viewModel; 
-
-        public LoginWindow(ViewModels.LoginWindowViewModel viewModel)
+        public LoginWindow(LoginWindowViewModel viewModel)
         {
             InitializeComponent();
 
-            DataContext = this.viewModel = viewModel;
+            DataContext = viewModel;
         }
 
         private void Accept_Button_Click(object sender, RoutedEventArgs e)
         {
+            // Check the username and password is not null or empty
             if (string.IsNullOrWhiteSpace (usernamebox.Text) ||
                 string.IsNullOrWhiteSpace (passwordbox.Password))
             {
-                MessageBox.Show("Enter username/password", "Error", MessageBoxButton.OK);
+                MessageBox.Show("Invalid username/password", "Error", MessageBoxButton.OK);
                 return;
             }
 
-            viewModel.Password = passwordbox.Password;
+            // Before closing set the password of the view model
+            (DataContext as LoginWindowViewModel).PassWord = passwordbox.Password;
 
             Close();
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.UserName = viewModel.Password = null;
-
             Close();
         }
 

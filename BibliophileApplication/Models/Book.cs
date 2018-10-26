@@ -28,11 +28,10 @@ namespace BibliophileApplication.Models
 
             set
             {
-                if (_bookId == null) // Set only once
-                {
-                    _bookId = value;
-                    NotifyPropertyChanged("BookId");
-                }
+
+                _bookId = value;
+                NotifyPropertyChanged("BookId");
+                
             }
         }
         public string Title

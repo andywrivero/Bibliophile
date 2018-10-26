@@ -12,41 +12,41 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BibliophileApplication.Models;
+using BibliophileApplication.ViewModels;
 
 namespace BibliophileApplication.Views
 {
-    /// <summary>
-    /// Interaction logic for AdminInfoWindow.xaml
-    /// </summary>
+
     public partial class AdminInfoWindow : Window
     {
         private enum MODE { NEWADMIN, MODIFYADMIN };
         private MODE mode;
 
-        private ObservableCollection<Models.User> admins;
-        private Models.Admin admin;
+        private ObservableCollection<User> users;
+        private Admin admin;
 
-        // This constructor is to construct a new admin employee
-        public AdminInfoWindow(ObservableCollection<Models.User> admins)
+        // This constructor is to construct a new admin employee 
+        public AdminInfoWindow(ObservableCollection<User> users)
         {
-            this.admins = admins ?? throw new NullReferenceException("Invalid reference to an admin list");
+            this.users = users ?? throw new NullReferenceException("Invalid reference to an admin list");
 
             InitializeComponent();
 
-            DataContext = new Models.Admin();
+            DataContext = new Admin();
 
             mode = MODE.NEWADMIN;
             Title = "New Admi Employee";
         }
 
         // This constructor for this window is to modify an existing admin employee
-        public AdminInfoWindow(Models.Admin admin)
+        public AdminInfoWindow(Admin admin)
         {
             this.admin = admin ?? throw new NullReferenceException("Invalid reference to an admin");
 
             InitializeComponent();
 
-            DataContext = new Models.Admin()
+            DataContext = new Admin()
             {
                 UserId = admin.UserId,
                 FirstName = admin.FirstName,
@@ -69,25 +69,37 @@ namespace BibliophileApplication.Views
         private void Accept_Button_Click(object sender, RoutedEventArgs e)
         {
             // Validate window information
+            if (!admincardcontrol.ValidateInfo()) return;
 
             if (mode == MODE.NEWADMIN)
             {
-                Models.Admin newAdmin = DataContext as Models.Admin;
+                Admin newAdmin = DataContext as Admin;
+
+                if (users.FirstOrDefault (u => u.UserId == newAdmin.UserId) != null)
+                {
+                    MessageBox.Show("Enter a different card id", "Error", MessageBoxButton.OK);
+                    return;
+                }
 
                 if (string.IsNullOrWhiteSpace(passwordbox.Password))
                     newAdmin.PassWord = Others.PasswordHasher.HashPassword("1234"); // default password
                 else
                     newAdmin.PassWord = Others.PasswordHasher.HashPassword(passwordbox.Password);
 
-                admins.Add(newAdmin);
+                users.Add(newAdmin);
 
                 Close();
             }
             else
             {
-                Models.Admin modAdmin = DataContext as Models.Admin;
+                Admin modAdmin = DataContext as Admin;
 
-                admin.UserId = modAdmin.UserId;
+                if (modAdmin.UserId != admin.UserId)
+                {
+                    MessageBox.Show("Card id cannot be modified", "Error", MessageBoxButton.OK);
+                    return;
+                }
+
                 admin.FirstName = modAdmin.FirstName;
                 admin.LastName = modAdmin.LastName;
                 admin.Address = modAdmin.Address;

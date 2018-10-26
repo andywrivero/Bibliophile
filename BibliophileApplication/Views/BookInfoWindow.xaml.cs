@@ -58,19 +58,32 @@ namespace BibliophileApplication.Views
 
         private void Accept_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (!bookcard.ValidateInfo()) return;
+
             if (mode == MODE.NEWBOOK)
             {
-                var book = DataContext as Models.Book;
+                var newBook = DataContext as Models.Book;
 
-                book.AvailableCopies = book.TotalCopies;
+                if (books.FirstOrDefault (b => b.BookId == newBook.BookId) != null)
+                {
+                    MessageBox.Show("A book with such ISBN already exist", "Error", MessageBoxButton.OK);
+                    return;
+                }
 
-                books.Add(book);
+                newBook.AvailableCopies = newBook.TotalCopies;
+
+                books.Add(newBook);
             }
             else
             {
                 Models.Book modBook = DataContext as Models.Book;
 
-                book.BookId = modBook.BookId;
+                if (book.BookId != modBook.BookId)
+                {
+                    MessageBox.Show("ISBN cannot be changed", "Error", MessageBoxButton.OK);
+                    return;
+                }
+
                 book.Title = modBook.Title;
                 book.Author = modBook.Author;
                 book.PublicationYear = modBook.PublicationYear;

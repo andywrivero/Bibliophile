@@ -6,35 +6,36 @@
              xmlns:local="clr-namespace:BibliophileApplication.MyControls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
+             Background="White"
              d:DesignHeight="250" d:DesignWidth="620">
 
     <Grid Name="maingrid">
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <Label>Library Card ID:</Label>
-                <TextBox Text="{Binding UserId}" Width="200" Height="30"/>
+                <TextBox Name="cardidbox" Text="{Binding UserId}" Width="200" Height="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20 20 0 0">
                 <Label>First Name:</Label>
-                <TextBox Text="{Binding FirstName}" Width="200" Height="30"/>
+                <TextBox Name="firstnamebox" Text="{Binding FirstName}" Width="200" Height="30"/>
                 <Label Margin="50 0 0 0">LastName:</Label>
-                <TextBox Text="{Binding LastName}" Width="200" Height="30"/>
+                <TextBox Name="lastnamebox" Text="{Binding LastName}" Width="200" Height="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="35 20 0 0">
                 <Label>Address:</Label>
-                <TextBox Text="{Binding Address}" Width="400" Height="30"/>
+                <TextBox Name="addressbox" Text="{Binding Address}" Width="400" Height="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="58 20 0 0">
                 <Label>City:</Label>
-                <TextBox Text="{Binding City}" Width="200" Height="30"/>
+                <TextBox Name="citybox" Text="{Binding City}" Width="200" Height="30"/>
                 <Label Margin="20 0 0 0">State:</Label>
-                <TextBox Text="{Binding State}" Width="100" Height="30"/>
+                <TextBox Name="statebox" Text="{Binding State}" Width="100" Height="30"/>
                 <Label Margin="20 0 0 0">ZipCode:</Label>
-                <TextBox Text="{Binding ZipCode}" Width="80" Height="30"/>
+                <TextBox Name="zipbox" Text="{Binding ZipCode}" Width="80" Height="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="49 20 0 0">
                 <Label>Email:</Label>
-                <TextBox Text="{Binding Email}" Width="400" Height="30"/>
+                <TextBox Name="emailbox" Text="{Binding Email}" Width="400" Height="30"/>
                 <Label Margin="20 0 0 0">Age:</Label>
                 <ComboBox Name="combobox" SelectedItem="{Binding Age}" Width="50"/>
             </StackPanel>

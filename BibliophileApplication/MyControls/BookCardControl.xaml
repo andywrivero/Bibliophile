@@ -5,20 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BibliophileApplication.MyControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="450">
+             d:DesignHeight="300" d:DesignWidth="450"
+             Background="White">
     <Grid Name="maingrid">
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="55 20 0 0">
                 <Label>Book ISBN:</Label>
-                <TextBox Text="{Binding BookId}" Width="300" Height="30"/>
+                <TextBox Name="isbnbox" Text="{Binding BookId}" Width="300" Height="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="90 20 0 0">
                 <Label>Title:</Label>
-                <TextBox Text="{Binding Title}" Width="300" Height="30"/>
+                <TextBox Name="titlebox" Text="{Binding Title}" Width="300" Height="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="76 20 0 0">
                 <Label>Author:</Label>
-                <TextBox Text="{Binding Author}" Width="300" Height="30"/>
+                <TextBox Name="authorbox" Text="{Binding Author}" Width="300" Height="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20 20 0 0">
                 <Label>Publication's Year:</Label>
@@ -35,7 +36,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="45 20 0 0">
                 <Label>Total Copies:</Label>
-                <TextBox Text="{Binding TotalCopies}" Width="100" Height="30"/>
+                <TextBox Name="totalcopiesbox" Text="{Binding TotalCopies}" Width="100" Height="30"/>
                 <Label Name="availablecopieslabel">Available Copies:</Label>
                 <TextBox Name="availablecopiesbox" Text="{Binding AvailableCopies}" Width="100" Height="30"/>
             </StackPanel>
