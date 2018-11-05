@@ -94,7 +94,7 @@ namespace BibliophileApplication.Models
                 NotifyPropertyChanged("AvailableCopies");
             }
         }
-        public virtual ObservableCollection<User> Users { get; set; }
+        public virtual ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
 
         public override bool Equals(object obj)
         {
