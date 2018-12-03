@@ -39,6 +39,12 @@
                 <sys:String>Autobiographies</sys:String>
                 <sys:String>Fantasy</sys:String>
             </x:Array>
+
+            <Style TargetType="Window">
+                <Style.Setters>
+                    <Setter Property="Background" Value="AliceBlue"/>
+                </Style.Setters>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

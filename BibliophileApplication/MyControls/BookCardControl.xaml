@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BibliophileApplication.MyControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="450"
-             Background="White">
+             Background="Azure">
     <Grid Name="maingrid">
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="55 20 0 0">

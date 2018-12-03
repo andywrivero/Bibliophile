@@ -147,29 +147,32 @@ namespace BibliophileApplication.Views
 
         private void RemoveEmployee_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (viewmodel.Admins.Count == 1)
-            {
-                MessageBox.Show("Admin employee cannot be removed");
-                return;
-            }
-
-            if (employeegrid.SelectedIndex > -1)
-            {
-                User employee = employeegrid.SelectedItem as User;
-
-                if (employee.Books.Count > 0)
+            if(MessageBox.Show("Are you sure you want to remove this Employee?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            { 
+                if (viewmodel.Admins.Count == 1)
                 {
-                    MessageBox.Show("Admin employee cannot be removed. Return books to the library first", "Error", MessageBoxButton.OK);
+                  MessageBox.Show("Admin employee cannot be removed");
+                  return;
                 }
-                else
+
+                 if (employeegrid.SelectedIndex > -1)
                 {
+                  User employee = employeegrid.SelectedItem as User;
+
+                  if (employee.Books.Count > 0)
+                  {
+                     MessageBox.Show("Admin employee cannot be removed. Return books to the library first", "Error", MessageBoxButton.OK);
+                  }
+                 else
+                 {
                     // remove the admin employee
                     // remove it from the db user list
                     viewmodel.Users.Remove(employee);
                     // we must also remove it from the admin query
                     viewmodel.Admins.RemoveAt(employeegrid.SelectedIndex);
                     db.SaveChanges();
-                }
+                    }
+                 }
             }
         }
 
@@ -190,16 +193,19 @@ namespace BibliophileApplication.Views
 
         private void RemoveBook_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (bookgrid.SelectedIndex > -1)
-            {
-                if (viewmodel.Books[bookgrid.SelectedIndex].TotalCopies != viewmodel.Books[bookgrid.SelectedIndex].AvailableCopies)
-                {
-                    MessageBox.Show("Book cannot be removed", "Error", MessageBoxButton.OK);
-                }
-                else
-                {
-                    viewmodel.Books.RemoveAt(bookgrid.SelectedIndex);
-                    db.SaveChanges();
+            if (MessageBox.Show("Are you sure you want to remove this book?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            { 
+                if (bookgrid.SelectedIndex > -1)
+                 {
+                     if (viewmodel.Books[bookgrid.SelectedIndex].TotalCopies != viewmodel.Books[bookgrid.SelectedIndex].AvailableCopies)
+                     {
+                         MessageBox.Show("Book cannot be removed", "Error", MessageBoxButton.OK);
+                     }
+                     else
+                     {
+                        viewmodel.Books.RemoveAt(bookgrid.SelectedIndex);
+                        db.SaveChanges();
+                     }
                 }
             }
         }

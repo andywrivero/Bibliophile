@@ -116,7 +116,7 @@ namespace BibliophileApplication.Models
                 NotifyPropertyChanged("Email");
             }
         }
-        public virtual ObservableCollection<Book> Books { get; set; }
+        public virtual ObservableCollection<Book> Books { get; set; } = new ObservableCollection<Book>();
 
         public override bool Equals(object obj)
         {
