@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BibliophileApplication.MyControls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             Background="White"
+             Background="Azure"
              d:DesignHeight="250" d:DesignWidth="620">
 
     <Grid Name="maingrid">
