@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         mc:Ignorable="d"
         Title="Bibliophile System" Height="800" Width="1000"
-        Background="WhiteSmoke">
+        Background="Azure">
 
     <Window.Resources>
         <Image x:Key="adminimg" Source="../Images/admin.png"/>
@@ -30,7 +30,9 @@
                    FontSize="50"
                    FontStyle="Italic"
                    FontStretch="Expanded"
-                   Text="Welcome to Bibliophile!"/>
+                   Text="Welcome to Bibliophile!"
+                   
+                   />
 
         <StackPanel Grid.Row ="1" 
                     Grid.Column ="0" 
@@ -39,7 +41,7 @@
             <TextBlock 
                 Text="Admin Login" 
                 HorizontalAlignment="Center"
-                FontSize="20"
+                FontSize="30"
                 FontStyle="Oblique"
                 FontStretch="Expanded"/>
             <Border 
@@ -61,9 +63,9 @@
                     Orientation="Vertical"
                     Margin="0 100 0 0">
             <TextBlock 
-                Text="Guest Login" 
+                Text="Guest Search" 
                 HorizontalAlignment="Center"
-                FontSize="20"
+                FontSize="30"
                 FontStyle="Oblique"
                 FontStretch="Expanded"/>
             <Border 

@@ -6,22 +6,27 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
-        Title="" Height="550" SizeToContent="Width">
+        Title="" Height="550" SizeToContent="Width"
+        Background="Azure"
+        >
 
     <TabControl>
         <TabItem Header="Users" Height="30" Width="80">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="72*"/>
+                    <ColumnDefinition Width="29*"/>
+                    <ColumnDefinition Width="519*"/>
+                    <ColumnDefinition Width="410*"/>
                 </Grid.ColumnDefinitions>
 
-                <GroupBox Header="User Detailed Information" Grid.Column="0">
-                    <mycontrols:UserCardInfoControl x:Name="usercardcontrol" Editable="False"/>
+                <GroupBox Header="User Detailed Information" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0.4">
+                    <mycontrols:UserCardInfoControl x:Name="usercardcontrol" Editable="False" Margin="0,0,0,174.6"/>
+
                 </GroupBox>
                 <DataGrid Name="usergrid"
-                          Grid.Column="1"
-                          Margin="5"
+                          Grid.Column="3"
+                          Margin="5,5,5.4,5.4"
                           Width="400"
                           SelectionMode="Single"
                           IsReadOnly="True"
@@ -30,7 +35,8 @@
                           SelectionUnit="FullRow"
                           SelectedIndex="0"
                           ItemsSource="{Binding Users}"
-                          SelectedItem="{Binding ElementName=usercardcontrol, Path=User}">
+                          SelectedItem="{Binding ElementName=usercardcontrol, Path=User}"
+                          Background="Azure">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Card Id" Width="*" Binding="{Binding UserId}"/>
                         <DataGridTextColumn Header="First Name" Width="*" Binding="{Binding FirstName}"/>
@@ -45,6 +51,9 @@
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
+                <Button Content="Add User" Click="AddUser_MenuItem_Click" Margin="103.584,309,269,118.4" Grid.Column="2"/>
+                <Button Content="Modify User" Click="ModifyUser_MenuItem_Click" Margin="230.584,309,142,118.4" Grid.Column="2"/>
+                <Button Content="Remove User" Click="RemoveUser_MenuItem_Click" Margin="349.584,309,23,118.4" Grid.Column="2"/>
             </Grid>
         </TabItem>
 
@@ -69,7 +78,9 @@
                           SelectionUnit="FullRow"
                           SelectedIndex="0"
                           ItemsSource="{Binding Books}"
-                          SelectedItem="{Binding ElementName=bookcardcontrol, Path=Book}">
+                          SelectedItem="{Binding ElementName=bookcardcontrol, Path=Book}"
+                          Background="Azure"
+                          >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ISBN" Width="*" Binding="{Binding BookId}"/>
                         <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Title}"/>
@@ -80,11 +91,17 @@
                         <ContextMenu>
                             <MenuItem Header="Add Book" Click="AddBook_MenuItem_Click"/>
                             <MenuItem Header="Modify Book" Click="ModifyBook_MenuItem_Click"/>
-                            <MenuItem Header="Remove Book" Click="RemoveBook_MenuItem_Click"/>
                             <MenuItem Header="Checkout Book" Click="CheckoutBook_MenuItem_Click"/>
+                            <Separator />
+                            <MenuItem Header="Remove Book" Click="RemoveBook_MenuItem_Click"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
+                <Button Content="Add Book" Click="AddBook_MenuItem_Click" Margin="43,332,306.8,100.4"/>
+                <Button Content="Modify Book" Click="ModifyBook_MenuItem_Click" Margin="227,332,125.8,100.4"/>
+                <Button Content="Checkout Book" Click="CheckoutBook_MenuItem_Click" Margin="139,332,218.8,100.4"/>
+                <Button Content="Remove Book"  Click="RemoveBook_MenuItem_Click" Margin="320,332,36.8,100.4"/>
+                
             </Grid>
         </TabItem>
 
@@ -109,7 +126,8 @@
                           SelectionUnit="FullRow"
                           SelectedIndex="0"
                           ItemsSource="{Binding Admins}"
-                          SelectedItem="{Binding ElementName=admincardcontrol, Path=Admin}">
+                          SelectedItem="{Binding ElementName=admincardcontrol, Path=Admin}"
+                          Background="Azure">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Employee Id" Width="*" Binding="{Binding UserId}"/>
                         <DataGridTextColumn Header="First Name" Width="*" Binding="{Binding FirstName}"/>
@@ -120,10 +138,14 @@
                         <ContextMenu>
                             <MenuItem Header="Add Employee" Click="AddEmployee_MenuItem_Click"/>
                             <MenuItem Header="Modify Employee" Click="ModifyEmployee_MenuItem_Click"/>
+                            <Separator/>
                             <MenuItem Header="Remove Employee" Click="RemoveEmployee_MenuItem_Click"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
+                <Button Content="Add Employee" Height="40" Width="110" Click="AddEmployee_MenuItem_Click" Margin="223,317,297.4,115.4"/>
+                <Button Content="Modify Employee" Height="40" Width="110" Click="ModifyEmployee_MenuItem_Click" Margin="338,317,182.4,115.4"/>
+                <Button Content="Remove Employee" Height="40" Width="110" Click="RemoveEmployee_MenuItem_Click" Margin="453,317,67.4,115.4"/>
             </Grid>
         </TabItem>
 
@@ -137,7 +159,8 @@
                         HorizontalContentAlignment="Center"
                         SelectionUnit="FullRow"
                         ItemsSource="{Binding Checkouts}"
-                        SelectedIndex="0">
+                        SelectedIndex="0"
+                        Background="Azure">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Card ID" Width="*" Binding="{Binding Item1.UserId}"/>
                     <DataGridTextColumn Header="First Name" Width="*" Binding="{Binding Item1.FirstName}"/>

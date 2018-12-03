@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
-        Title="" Height="500" Width="800">
+        Title="" Height="500" Width="800"
+        Background="Azure"
+        >
 
     <Window.Resources>
         <Style TargetType="Button">
