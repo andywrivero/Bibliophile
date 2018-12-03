@@ -76,6 +76,9 @@
     <Compile Include="MyControls\UserCardInfoControl.xaml.cs">
       <DependentUpon>UserCardInfoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Others\DelegateCommand.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Others\PasswordHasher.cs" />
     <Compile Include="ViewModels\AdminWindowViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
