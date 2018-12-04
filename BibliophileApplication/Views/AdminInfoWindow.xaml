@@ -10,13 +10,6 @@
         Background="Azure"
         >
 
-    <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Width" Value="90"/>
-        </Style>
-    </Window.Resources>
-
     <StackPanel Orientation="Vertical">
         <mycontrols:AdminInfoControl x:Name="admincardcontrol" Editable="True" DataContext="{Binding}"/>
         <StackPanel Orientation="Horizontal" Margin="0 20 0 0">

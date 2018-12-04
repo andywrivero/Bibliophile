@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Background="Azure"
         Title="Logged in as Guest" Height="580" SizeToContent="Width">
     <Grid>
         <Grid.ColumnDefinitions>

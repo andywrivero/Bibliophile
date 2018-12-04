@@ -18,27 +18,11 @@ namespace BibliophileApplication.Views
 {
     public partial class LoginWindow : Window
     {
-        public LoginWindow(LoginWindowViewModel viewModel)
+        public LoginWindow(LoginWindowViewModel viewmodel)
         {
             InitializeComponent();
 
-            DataContext = viewModel;
-        }
-
-        private void Accept_Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Check the username and password is not null or empty
-            if (string.IsNullOrWhiteSpace (usernamebox.Text) ||
-                string.IsNullOrWhiteSpace (passwordbox.Password))
-            {
-                MessageBox.Show("Invalid username/password", "Error", MessageBoxButton.OK);
-                return;
-            }
-
-            // Before closing set the password of the view model
-            (DataContext as LoginWindowViewModel).PassWord = passwordbox.Password;
-
-            Close();
+            DataContext = viewmodel ?? throw new NullReferenceException();
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
@@ -46,13 +30,9 @@ namespace BibliophileApplication.Views
             Close();
         }
 
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Handle the Return Key on the textboxes as the Accept Button
-            if (e.Key == Key.Return)
-            {
-                Accept_Button_Click(sender, null);
-            }
+            Close();
         }
     }
 }

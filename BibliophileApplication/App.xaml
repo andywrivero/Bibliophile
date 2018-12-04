@@ -42,8 +42,28 @@
 
             <Style TargetType="Window">
                 <Style.Setters>
-                    <Setter Property="Background" Value="AliceBlue"/>
+                    <Setter Property="Background" Value="Azure"/>
                 </Style.Setters>
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" BorderThickness="1" Padding="2" Background="Orange">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="90"/>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="Green"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

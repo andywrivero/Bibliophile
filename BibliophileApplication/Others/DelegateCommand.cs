@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace BibliophileApplication.Utils
+namespace BibliophileApplication.Others
 {
     public class DelegateCommand : ICommand
     {

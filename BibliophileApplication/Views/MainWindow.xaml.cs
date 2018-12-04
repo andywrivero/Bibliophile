@@ -42,33 +42,18 @@ namespace BibliophileApplication.Views
         private void Admin_Button_Click(object sender, RoutedEventArgs e)
         {
             // Create a login window 
-            LoginWindowViewModel loginVM;
-            LoginWindow loginWindow = new LoginWindow(loginVM = new LoginWindowViewModel()) { Owner = this };
+            LoginWindowViewModel viewmodel = new LoginWindowViewModel();
+            LoginWindow loginWindow = new LoginWindow(viewmodel) { Owner = this };
             loginWindow.ShowDialog();
 
-            // Check if a valid username and password was set in the view model by the login window
-            if (loginVM.UserName != null && loginVM.PassWord != null)
-            {
-                // Get the admin employee with such username and password
-                Admin admin = GetAdmin(loginVM.UserName, loginVM.PassWord);
+            if (viewmodel.Admin == null) return;
 
-                // Check such admin exist
-                if (admin == null)
-                {
-                    MessageBox.Show("Incorrect login information", "Error", MessageBoxButton.OK);
-                    return;
-                }
+            // If login was successful then create the adminwindow
+            AdminMainWindow adminWindow = new AdminMainWindow(viewmodel.Admin.UserId.Value) { Owner = this };
+            adminWindow.Closed += (sender2, e2) => { Show(); };
 
-                // Create a new admin window
-                AdminMainWindow adminWindow = new AdminMainWindow(admin.UserId.Value);
-
-                // handle the closed event of the admin window to restore the main window
-                adminWindow.Closed += (sender2, e2) => { Show(); };
-
-                // hide main window, and show admin window
-                Hide();
-                adminWindow.Show();
-            }
+            Hide();
+            adminWindow.Show();
         }
 
         private void User_Button_Click(object sender, RoutedEventArgs e)
@@ -79,25 +64,8 @@ namespace BibliophileApplication.Views
             // handle the closed event of the user window to restore the main window
             userWindow.Closed += (sender2, e2) => { Show(); };
 
-            // hide main window, and show user window
             Hide();
             userWindow.Show();
-        }
-
-        // Find and return the admin from the database that matches username and password
-        private Admin GetAdmin(string username, string password)
-        {
-            Admin admin = null;
-
-            using (var db = new BibliophileContext())
-            {
-                // Find the admin employee in the database that matches username and password
-                admin = (from user in db.Users
-                         where user is Admin
-                         select user as Admin).AsEnumerable().FirstOrDefault(a => a.UserName == username && PasswordHasher.VerifyPassword(password, a.PassWord));
-            }
-
-            return admin;
         }
     }
 }
