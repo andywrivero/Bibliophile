@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:BibliophileApplication.Views"
         xmlns:mycontrols="clr-namespace:BibliophileApplication.MyControls"
         mc:Ignorable="d"
+        Background="Azure"
         Title="Checkout Window" Height="600" SizeToContent="Width">
     
     <StackPanel Orientation="Vertical">

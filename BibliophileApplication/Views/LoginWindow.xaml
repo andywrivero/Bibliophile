@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BibliophileApplication.Views"
+        xmlns:vm="clr-namespace:BibliophileApplication.ViewModels"
         mc:Ignorable="d"
-        Title="Admin Password Verification" Height="200" Width="400"
+        Title="Admin Password Verification" Height="230" Width="400"
         ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
         Background="Azure">
-    
+
     <Grid HorizontalAlignment="Center">
         <Label Content="UserName" 
                HorizontalAlignment="Left" 
@@ -27,21 +28,21 @@
                  Margin="96,39,0,0" 
                  TextWrapping="Wrap"  
                  VerticalAlignment="Top" 
-                 Width="250"
-                 KeyDown="TextBox_KeyDown"/>
+                 Width="250"/>
         <PasswordBox Name="passwordbox"
                      HorizontalAlignment="Left" 
                      Margin="96,75,0,0" 
                      VerticalAlignment="Top" 
                      Width="250" 
-                     Height="24"
-                     KeyDown="TextBox_KeyDown"/>
+                     Height="24"/>
         <Button Content="Accept" 
                 HorizontalAlignment="Left" 
                 Margin="78,130,0,0" 
                 VerticalAlignment="Top" 
                 Width="75" 
-                Click="Accept_Button_Click"/>
+                Click="Button_Click"
+                Command="{Binding LoginDelegateCommand}"
+                CommandParameter="{Binding ElementName=passwordbox}"/>
         <Button Content="Cancel" 
                 HorizontalAlignment="Left" 
                 Margin="216,130,0,0" 
