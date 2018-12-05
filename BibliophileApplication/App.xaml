@@ -42,8 +42,73 @@
 
             <Style TargetType="Window">
                 <Style.Setters>
-                    <Setter Property="Background" Value="AliceBlue"/>
+                    <Setter Property="Background" Value="Azure"/>
                 </Style.Setters>
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" BorderThickness="1" Padding="2" Background="Orange">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Width" Value="90"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                  <Border CornerRadius="5" BorderThickness="1" Padding="2" Background="Green">
+                                      <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                              </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                        
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="TabItem">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Width" Value="150"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border Background="Orange" CornerRadius="5,5,0,0">
+                                <ContentPresenter 
+                                    Content="{Binding Path=Header, RelativeSource={RelativeSource FindAncestor,AncestorType=TabItem,AncestorLevel=1}}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="5,2,0,0"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="true">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Border Background="Green" CornerRadius="5,5,0,0">
+                                       
+                                        <ContentPresenter 
+                                        Content="{Binding Path=Header, RelativeSource={RelativeSource FindAncestor, AncestorType=TabItem, AncestorLevel=1}}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="5,2,0,0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
