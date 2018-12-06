@@ -22,8 +22,8 @@
                     <GroupBox Header="User Detailed Information" Margin="5">
                         <mycontrols:UserCardInfoControl x:Name="usercardcontrol" Editable="False"/>
                     </GroupBox>
-                    <StackPanel Orientation="Horizontal" Margin="0 120 0 0">
-                        <Button Content="Add User" Height="40" Width="110" Click="AddUser_MenuItem_Click" Margin="250 0 0 0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0 150 0 0" HorizontalAlignment="Center">
+                        <Button Content="Add User" Height="40" Width="110" Click="AddUser_MenuItem_Click"/>
                         <Button Content="Modify User" Height="40" Width="110" Click="ModifyUser_MenuItem_Click" Margin="20 0 0 0"/>
                         <Button Content="Remove User" Height="40" Width="110" Click="RemoveUser_MenuItem_Click" Margin="20 0 0 0"/>
                     </StackPanel>
@@ -69,8 +69,8 @@
                     <GroupBox Header="Book Detailed Information">
                         <mycontrols:BookCardControl x:Name="bookcardcontrol" Editable="False" Background="Azure"/>
                     </GroupBox>
-                    <StackPanel Orientation="Horizontal" Background="Azure" Margin="0 80 0 0">
-                        <Button Content="Add Book" Height="40" Width="110" Click="AddBook_MenuItem_Click" Margin="50 0 0 0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0 100 0 0" HorizontalAlignment="Center">
+                        <Button Content="Add Book" Height="40" Width="110" Click="AddBook_MenuItem_Click" />
                         <Button Content="Checkout Book" Height="40" Width="110" Click="CheckoutBook_MenuItem_Click" Margin="10 0 0 0"/>
                         <Button Content="Modify Book" Height="40" Width="110" Click="ModifyBook_MenuItem_Click" Margin="10 0 0 0"/>
                         <Button Content="Remove Book"  Height="40" Width="110" Click="RemoveBook_MenuItem_Click" Margin="10 0 0 0"/>
@@ -120,10 +120,14 @@
                     <GroupBox Header="Employee Detailed Information" Grid.Column="0" Margin="5">
                         <mycontrols:AdminInfoControl x:Name="admincardcontrol" Editable="False"/>
                     </GroupBox>
-                    <StackPanel Orientation="Horizontal" Margin="0 80 0 0 ">
-                        <Button Content="Add Employee" Height="40" Width="110" Click="AddEmployee_MenuItem_Click" Margin="250 0 0 0"/>
-                        <Button Content="Modify Employee" Height="40" Width="110" Click="ModifyEmployee_MenuItem_Click" Margin="20 0 0 0"/>
-                        <Button Content="Remove Employee" Height="40" Width="110" Click="RemoveEmployee_MenuItem_Click" Margin="20 0 0 0"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 100 0 0">
+                        <Button Content="Add Employee"
+                                Margin="0 0 20 0"
+                                Height="40" Width="110" 
+                                Click="AddEmployee_MenuItem_Click"/>
+                        <Button Margin="0 0 20 0"
+                                Content="Modify Employee" Height="40" Width="110" Click="ModifyEmployee_MenuItem_Click"/>
+                        <Button Content="Remove Employee" Height="40" Width="110" Click="RemoveEmployee_MenuItem_Click"/>
                     </StackPanel>
                 </StackPanel>
                 <DataGrid Name="employeegrid"
@@ -159,10 +163,6 @@
 
         <TabItem Header="Checkouts" Height="30" Width="80">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="67*"/>
-                    <ColumnDefinition Width="203*"/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="80"/>
@@ -193,7 +193,10 @@
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
-                <Button Grid.Row="1" Content="Remove" Height="40" Width="110" Click="RemoveCheckout_MenuItem_Click" Margin="153.762,25.5,345,14.5" Grid.Column="1"/>
+                <Button Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Content="Remove" Height="40" Width="110" Click="RemoveCheckout_MenuItem_Click"/>
             </Grid>
         </TabItem>
     </TabControl>
